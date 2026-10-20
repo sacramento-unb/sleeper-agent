@@ -1,0 +1,2988 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sleeper Agent | Persone Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #062744;
+      --navy-light: #0d3860;
+      --navy-dark: #031728;
+      --coral: #F05A24;
+      --coral-hover: #d84b1a;
+      --coral-light: rgba(240, 90, 36, 0.1);
+      --indigo: #150089;
+      --indigo-light: rgba(21, 0, 137, 0.08);
+      --gray-50: #f8fafc;
+      --gray-100: #f1f5f9;
+      --gray-200: #e2e8f0;
+      --gray-300: #cbd5e1;
+      --gray-600: #475569;
+      --gray-700: #334155;
+      --gray-900: #0f172a;
+      --white: #ffffff;
+      --shadow-sm: 0 1px 3px rgba(6, 39, 68, 0.05);
+      --shadow-md: 0 4px 20px rgba(6, 39, 68, 0.07);
+      --shadow-lg: 0 10px 30px rgba(6, 39, 68, 0.12);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-pill: 9999px;
+      --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--gray-50);
+      color: var(--gray-900);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Brand Navigation */
+    .navbar {
+      background: var(--navy);
+      color: var(--white);
+      padding: 0.85rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      box-shadow: 0 2px 10px rgba(6, 39, 68, 0.15);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--white);
+    }
+
+    .brand-badge {
+      background: var(--coral);
+      color: var(--coral-text, var(--white));
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: var(--transition);
+    }
+
+    /* Theme Selector in Top Bar */
+    .theme-selector-container {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: var(--radius-pill);
+      padding: 4px 12px;
+      backdrop-filter: blur(8px);
+      transition: var(--transition);
+    }
+
+    .theme-selector-container:hover,
+    .theme-selector-container:focus-within {
+      background: rgba(255, 255, 255, 0.20);
+      border-color: rgba(255, 255, 255, 0.45);
+      box-shadow: 0 0 0 2px var(--coral-light);
+    }
+
+    .theme-selector-icon {
+      font-size: 1rem;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      user-select: none;
+    }
+
+    .theme-selector-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: rgba(255, 255, 255, 0.85);
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .theme-select {
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      outline: none;
+      padding: 4px 6px;
+      border-radius: var(--radius-sm);
+      max-width: 190px;
+      text-overflow: ellipsis;
+    }
+
+    .theme-select option,
+    .theme-select optgroup {
+      background: #0f172a;
+      color: #ffffff;
+      font-weight: 500;
+      padding: 6px 10px;
+    }
+
+    .theme-select optgroup {
+      font-weight: 700;
+      color: var(--gray-300);
+      background: #061728;
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 0.75rem 1rem;
+      }
+      .theme-select {
+        max-width: 135px;
+        font-size: 0.8rem;
+      }
+      .theme-selector-label {
+        display: none;
+      }
+    }
+
+    .brand-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .brand-subtitle {
+      font-size: 0.75rem;
+      color: var(--gray-300);
+      font-weight: 400;
+      display: block;
+      margin-top: -2px;
+    }
+
+    .btn {
+      padding: 0.55rem 1.3rem;
+      border-radius: var(--radius-pill);
+      border: none;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: var(--transition);
+      text-decoration: none;
+    }
+
+    .btn-coral {
+      background: var(--coral);
+      color: var(--coral-text, var(--white));
+    }
+
+    .btn-coral:hover {
+      background: var(--coral-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px var(--coral-light);
+    }
+
+    .btn-outline-navy {
+      background: transparent;
+      border: 1.5px solid var(--navy);
+      color: var(--navy);
+    }
+
+    .btn-outline-navy:hover {
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    .btn-sm {
+      padding: 0.35rem 0.85rem;
+      font-size: 0.8rem;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Section Headers */
+    .section-header {
+      margin-bottom: 1.5rem;
+    }
+
+    .section-tag {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--coral);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .section-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -0.5px;
+    }
+
+    .section-desc {
+      color: var(--gray-600);
+      font-size: 0.95rem;
+      margin-top: 4px;
+    }
+
+    /* Grid cards */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--gray-200);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--navy);
+    }
+
+    .card-badge {
+      display: inline-block;
+      padding: 3px 8px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border-radius: var(--radius-pill);
+      background: var(--gray-100);
+      color: var(--navy);
+    }
+
+    .card-badge-coral {
+      background: var(--coral-light);
+      color: var(--coral);
+    }
+
+    .team-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.2rem;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .team-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Dashboard Hero Banner */
+    .hero-banner {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
+      color: var(--white);
+      padding: 2.5rem;
+      border-radius: var(--radius-lg);
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-banner::after {
+      content: "";
+      position: absolute;
+      right: -50px;
+      bottom: -50px;
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle, rgba(240, 90, 36, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .hero-meta h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.2;
+    }
+
+    .hero-meta p {
+      color: var(--gray-300);
+      margin-top: 6px;
+      font-size: 0.95rem;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 1.5rem;
+      z-index: 1;
+    }
+
+    .stat-box {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(8px);
+      padding: 1rem 1.25rem;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      text-align: center;
+      min-width: 110px;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--gray-300);
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-value {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-top: 2px;
+    }
+
+    .stat-value-coral {
+      color: var(--coral);
+    }
+
+    /* Tabs */
+    .tabs-nav {
+      display: flex;
+      gap: 8px;
+      border-bottom: 2px solid var(--gray-200);
+      margin-bottom: 2rem;
+      overflow-x: auto;
+    }
+
+    .tab-btn {
+      padding: 0.85rem 1.5rem;
+      background: transparent;
+      border: none;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--gray-600);
+      cursor: pointer;
+      position: relative;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .tab-btn:hover {
+      color: var(--navy);
+    }
+
+    .tab-btn.active {
+      color: var(--coral);
+    }
+
+    .tab-btn.active::after {
+      content: "";
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--coral);
+      border-radius: var(--radius-pill);
+    }
+
+    .tab-pane {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .tab-pane.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Tables */
+    .table-container {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--gray-200);
+      overflow-x: auto;
+      margin-bottom: 2rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    th {
+      background: var(--gray-50);
+      color: var(--navy);
+      font-weight: 700;
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--gray-200);
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.5px;
+    }
+
+    td {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--gray-200);
+      color: var(--gray-900);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: rgba(6, 39, 68, 0.015);
+    }
+
+    .badge-pos {
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      font-size: 0.75rem;
+      color: var(--white);
+      background: var(--navy);
+      display: inline-block;
+    }
+
+    .badge-status {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .badge-healthy {
+      background: rgba(16, 185, 129, 0.1);
+      color: #059669;
+    }
+
+    .badge-out {
+      background: rgba(239, 68, 68, 0.1);
+      color: #dc2626;
+    }
+
+    .badge-questionable {
+      background: rgba(245, 158, 11, 0.1);
+      color: #d97706;
+    }
+
+    .badge-upgrade {
+      background: rgba(14, 165, 233, 0.15);
+      color: #0284c7;
+    }
+
+    .breadcrumbs {
+      font-size: 0.85rem;
+      color: var(--gray-600);
+    }
+
+    .breadcrumbs a {
+      color: var(--navy);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .breadcrumbs a:hover {
+      text-decoration: underline;
+    }
+
+    .alert-box {
+      background: var(--coral-light);
+      border-left: 4px solid var(--coral);
+      padding: 1rem;
+      border-radius: var(--radius-sm);
+      margin-bottom: 1.5rem;
+    }
+
+    .alert-box h4 {
+      color: var(--coral);
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+
+    .alert-box ul {
+      margin-left: 1.25rem;
+      font-size: 0.85rem;
+      color: var(--gray-700);
+    }
+
+    .spinner {
+      border: 3px solid rgba(6, 39, 68, 0.1);
+      border-top: 3px solid var(--coral);
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      animation: spin 0.8s linear infinite;
+      margin: 2rem auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--gray-600);
+      font-size: 0.95rem;
+      grid-column: 1 / -1;
+    }
+
+    /* Modal styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(6, 39, 68, 0.7);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 1rem;
+    }
+
+    .modal-card {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      max-width: 520px;
+      width: 100%;
+      padding: 2.25rem;
+      max-height: 90vh;
+      overflow-y: auto;
+      border: 1px solid var(--gray-200);
+      position: relative;
+    }
+
+    .modal-card-lg {
+      max-width: 820px;
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      background: transparent;
+      border: none;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: var(--gray-600);
+      line-height: 1;
+    }
+
+    .modal-close-btn:hover {
+      color: var(--navy);
+    }
+
+    .form-group {
+      margin-bottom: 1.15rem;
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.65rem 1rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--gray-300);
+      font-family: inherit;
+      font-size: 0.9rem;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .form-input:focus {
+      border-color: var(--coral);
+      box-shadow: 0 0 0 3px var(--coral-light);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Brand Navbar -->
+  <nav class="navbar">
+    <a href="#" class="brand-logo" onclick="resetToTeams()">
+      <span class="brand-badge" id="navbarBrandBadge">Persone</span>
+      <div>
+        <span class="brand-title">Sleeper Agent</span>
+        <span class="brand-subtitle">Fantasy AI Intelligence & Decision GM</span>
+      </div>
+    </a>
+    
+    <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+      <!-- Team Theme Selector in Top Bar -->
+      <div class="theme-selector-container">
+        <span class="theme-selector-icon">🎨</span>
+        <label for="themeSelector" class="theme-selector-label">Tema:</label>
+        <select id="themeSelector" class="theme-select" onchange="applyTheme(this.value)" title="Selecione o tema do time">
+          <!-- Populated dynamically with team themes -->
+        </select>
+      </div>
+
+      <div id="navAuthArea" style="display: flex; gap: 10px; align-items: center;">
+        <!-- Populated dynamically: Login buttons or User info / Admin button / Logout -->
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <!-- Breadcrumbs & Cache Status Bar -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+      <div id="breadcrumbs" class="breadcrumbs">
+        <span>Painel Principal</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <span id="cacheBadge" class="card-badge" style="background: rgba(21, 0, 137, 0.08); color: var(--indigo); font-weight: 600;">⚡ Cache SQLite</span>
+        <button class="btn btn-outline-navy btn-sm" onclick="forceRefreshData()">🔄 Atualizar Dados</button>
+      </div>
+    </div>
+
+    <!-- Teams & Seasons View (Direct single league) -->
+    <section id="teamsSection">
+      <div class="section-header" style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <span class="section-tag" id="leagueSeasonTag">Temporada 2026</span>
+          <h2 id="leagueHeaderTitle" class="section-title">Times da Liga</h2>
+          <p class="section-desc">Escolha qualquer time da liga para abrir as recomendações de GM, escalação titular e waivers.</p>
+        </div>
+        <div>
+          <label style="font-weight: 600; font-size: 0.85rem; color: var(--navy); display: block; margin-bottom: 6px;">Temporada / Ano:</label>
+          <div id="seasonSelector" style="display: flex; gap: 6px; flex-wrap: wrap;"></div>
+        </div>
+      </div>
+
+      <div id="teamsGrid" class="grid">
+        <div class="spinner"></div>
+      </div>
+    </section>
+
+    <!-- Step 2: Team Intelligence Dashboard -->
+    <section id="dashboardSection" style="display: none;">
+      <!-- Hero Banner -->
+      <div class="hero-banner">
+        <div class="hero-meta">
+          <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 8px; flex-wrap: wrap;">
+            <span class="brand-badge">Relatório Executivo</span>
+          </div>
+          <h1 id="dashTeamName">Meu Time</h1>
+          <p id="dashOwner">Proprietário: --</p>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-box">
+            <div class="stat-label">Campanha</div>
+            <div id="statRecord" class="stat-value">0-0</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">Pontos</div>
+            <div id="statPoints" class="stat-value">0.0</div>
+          </div>
+          <div class="stat-box" id="statFaabBox">
+            <div class="stat-label" id="statFaabLabel">Prioridade Waiver</div>
+            <div id="statFaab" class="stat-value stat-value-coral">#--</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">Próximo Oponente</div>
+            <div id="statOpponent" class="stat-value" style="font-size: 1rem; margin-top: 6px;">--</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card Parecer da IA / GM Insights (Gemini Flash) -->
+      <div class="card" id="geminiInsightsCard" style="margin-bottom: 1.5rem; border-top: 4px solid var(--coral); background: linear-gradient(180deg, rgba(240, 90, 36, 0.03) 0%, rgba(255, 255, 255, 1) 100%);">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; border-bottom: 1px solid var(--gray-200); padding-bottom: 0.75rem;">
+          <div>
+            <span class="section-tag" style="background: rgba(21, 0, 137, 0.08); color: var(--indigo); border: 1px solid rgba(21, 0, 137, 0.2);">Inteligência Artificial Executiva</span>
+            <h3 style="color: var(--navy); font-size: 1.25rem; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+              <span>Parecer da IA / GM Insights</span>
+              <span id="geminiModelBadge" class="brand-badge" style="font-size: 0.75rem; text-transform: none; letter-spacing: 0; background: var(--navy); color: #fff;">✨ IA Ativa</span>
+            </h3>
+          </div>
+          <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <span id="geminiCacheBadge" style="font-size: 0.8rem; font-weight: 600; color: var(--gray-600);"></span>
+            <button class="btn btn-outline-navy btn-sm" onclick="reloadGmInsights(true)" id="btnReloadGemini" title="Forçar reanálise da IA (Gemini / Ollama)">
+              🔄 Atualizar Análise IA
+            </button>
+          </div>
+        </div>
+        <div id="geminiLoading" style="display: none; padding: 2rem; text-align: center;">
+          <div class="spinner" style="margin: 0 auto 1rem auto; width: 32px; height: 32px; border: 3px solid rgba(240, 90, 36, 0.2); border-top-color: var(--coral); border-radius: 50%; animation: spin 0.8s linear infinite;"></div>
+          <p style="color: var(--navy); font-weight: 600; font-size: 0.95rem;">Processando parecer com Inteligência Artificial...</p>
+          <span style="font-size: 0.8rem; color: var(--gray-600);">Analisando projeções, lesões, confrontos e prioridades de elenco</span>
+        </div>
+        <div id="geminiContent" style="color: var(--gray-800); line-height: 1.6; font-size: 0.95rem;">
+          <!-- Rendered Markdown analysis -->
+        </div>
+      </div>
+
+      <!-- Tabs Navigation -->
+      <div class="tabs-nav">
+        <button class="tab-btn active" onclick="switchTab('lineup')">Otimização de Escalação</button>
+        <button class="tab-btn" onclick="switchTab('gemini')" id="tabBtnGemini">✨ Parecer da IA (Gemini Flash)</button>
+        <button class="tab-btn" onclick="switchTab('waivers')" id="tabBtnWaivers">Waiver Wire (Prioridade)</button>
+        <button class="tab-btn" onclick="switchTab('matchup')">Confronto da Semana</button>
+        <button class="tab-btn" onclick="switchTab('trade')">Analisador de Trocas</button>
+        <button class="tab-btn" onclick="switchTab('workflows')">Rotinas GM Semanais</button>
+      </div>
+
+      <!-- Tab 1: Lineup -->
+      <div id="tab-lineup" class="tab-pane active">
+        <div id="lineupAlerts" class="alert-box" style="display: none;">
+          <h4>Alertas Médicos & Status de Jogo</h4>
+          <ul id="lineupAlertsList"></ul>
+        </div>
+
+        <div id="lineupSwapsCard" class="card" style="margin-bottom: 1.5rem; display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <div>
+              <span class="section-tag">Otimização Recomendada</span>
+              <h3 style="color: var(--navy); font-size: 1.2rem;">Trocas Start/Sit Sugeridas</h3>
+            </div>
+            <span id="projGainBadge" class="card-badge card-badge-coral" style="font-size: 0.9rem; padding: 6px 12px;">+0.0 pts</span>
+          </div>
+          <div id="swapsContainer"></div>
+        </div>
+
+        <div class="section-header" style="margin-bottom: 0.75rem;">
+          <h3 style="color: var(--navy); font-size: 1.1rem;">Titulares Atuais</h3>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Posição</th>
+                <th>Jogador</th>
+                <th>Time NFL</th>
+                <th>Status</th>
+                <th>Projeção</th>
+                <th>Piso / Teto</th>
+              </tr>
+            </thead>
+            <tbody id="startersTableBody"></tbody>
+          </table>
+        </div>
+
+        <div class="section-header" style="margin-bottom: 0.75rem;">
+          <h3 style="color: var(--navy); font-size: 1.1rem;">Banco de Reservas</h3>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Posição</th>
+                <th>Jogador</th>
+                <th>Time NFL</th>
+                <th>Status</th>
+                <th>Projeção</th>
+              </tr>
+            </thead>
+            <tbody id="benchTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab 2: Waivers -->
+      <div id="tab-waivers" class="tab-pane">
+        <div class="section-header">
+          <span class="section-tag" id="waiversSectionTag">Waiver Wire (Sem FAAB)</span>
+          <h3 style="color: var(--navy); font-size: 1.25rem;">Melhores Opções de Reivindicação</h3>
+          <p class="section-desc">Jogadores livres avaliados com base no déficit posicional e projeção semanal.</p>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Prioridade</th>
+                <th>Jogador</th>
+                <th>Posição</th>
+                <th>Time NFL</th>
+                <th>Projeção</th>
+                <th id="thWaiverBid">Ordem de Reivindicação</th>
+                <th>Encaixe no Elenco</th>
+                <th>Corte Sugerido</th>
+                <th>Justificativa</th>
+              </tr>
+            </thead>
+            <tbody id="waiversTableBody"></tbody>
+          </table>
+        </div>
+
+        <div class="section-header" style="margin-top: 2rem;">
+          <span class="section-tag">Otimização de Elenco</span>
+          <h3 style="color: var(--navy); font-size: 1.25rem;">Candidatos ao Corte (Drop Candidates)</h3>
+          <p class="section-desc">Jogadores avaliados pelo impacto no equilíbrio do elenco (excedentes posicionais são priorizados para liberação).</p>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Jogador</th>
+                <th>Posição</th>
+                <th>Projeção</th>
+                <th>Situação</th>
+                <th>Motivo do Corte</th>
+              </tr>
+            </thead>
+            <tbody id="dropsTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab 3: Matchup -->
+      <div id="tab-matchup" class="tab-pane">
+        <div class="section-header" style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <span class="section-tag">Confronto da Semana</span>
+            <h3 style="color: var(--navy); font-size: 1.25rem;">Comparativo Head-to-Head</h3>
+            <p class="section-desc">Pontuações reais e projeções calibradas para formato Half-PPR (0.5 PPR).</p>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <label style="font-weight: 600; font-size: 0.85rem; color: var(--navy);">Semana:</label>
+            <div id="matchupWeekSelector" style="display: flex; gap: 6px;"></div>
+          </div>
+        </div>
+
+        <!-- Matchup Banner with Status -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; background: var(--white); padding: 12px 18px; border-radius: var(--radius-sm); border: 1px solid var(--gray-200);">
+          <div style="font-size: 0.9rem; color: var(--gray-700);">
+            <strong id="matchupWeekTitle">Semana 1</strong> • Formato: <span class="card-badge">Half-PPR (0.5)</span>
+          </div>
+          <div id="matchupStatusBadgeContainer">
+            <span id="matchupStatusBadge" class="card-badge card-badge-coral">PRÉ-JOGO</span>
+          </div>
+        </div>
+
+        <div class="grid" style="grid-template-columns: 1fr 1fr; margin-bottom: 1.5rem;">
+          <div class="card" style="border-left: 4px solid var(--coral); cursor: default;">
+            <span class="section-tag">Seu Time</span>
+            <h2 id="matchupMyName" style="color: var(--navy); margin-bottom: 8px;">--</h2>
+            <div style="display: flex; align-items: baseline; gap: 10px;">
+              <div style="font-size: 2.2rem; font-weight: 800; color: var(--coral);" id="matchupMyScore">0.0</div>
+              <span id="matchupMyScoreLabel" style="font-size: 0.85rem; color: var(--gray-600);">pts atuais</span>
+            </div>
+            <p style="color: var(--navy); font-size: 0.9rem; font-weight: 600; margin-top: 4px;" id="matchupMyProj">Projeção: 0.0 pts</p>
+          </div>
+
+          <div class="card" style="border-left: 4px solid var(--navy); cursor: default;">
+            <span class="section-tag">Oponente</span>
+            <h2 id="matchupOppName" style="color: var(--navy); margin-bottom: 8px;">--</h2>
+            <div style="display: flex; align-items: baseline; gap: 10px;">
+              <div style="font-size: 2.2rem; font-weight: 800; color: var(--navy);" id="matchupOppScore">0.0</div>
+              <span id="matchupOppScoreLabel" style="font-size: 0.85rem; color: var(--gray-600);">pts atuais</span>
+            </div>
+            <p style="color: var(--navy); font-size: 0.9rem; font-weight: 600; margin-top: 4px;" id="matchupOppProj">Projeção: 0.0 pts</p>
+          </div>
+        </div>
+
+        <div id="matchupSpreadAlert" class="alert-box" style="background: var(--indigo-light); border-left-color: var(--indigo); margin-bottom: 1.75rem;">
+          <h4 style="color: var(--indigo);" id="matchupDiffText">Diferença de Projeção</h4>
+          <p id="matchupDiffDesc" style="font-size: 0.9rem; color: var(--gray-700);"></p>
+        </div>
+
+        <!-- Starter by starter table -->
+        <div class="section-header" style="margin-bottom: 0.75rem;">
+          <span class="section-tag">Duelo Posição por Posição</span>
+          <h3 style="color: var(--navy); font-size: 1.15rem;">Escalação Titular vs Oponente</h3>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 70px;">Slot</th>
+                <th>Seu Jogador</th>
+                <th style="text-align: right;">Proj</th>
+                <th style="text-align: right;">Real</th>
+                <th style="text-align: center; width: 40px;">vs</th>
+                <th>Real</th>
+                <th>Proj</th>
+                <th style="text-align: right;">Oponente</th>
+              </tr>
+            </thead>
+            <tbody id="starterComparisonsTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab 4: Trade Analyzer -->
+      <div id="tab-trade" class="tab-pane">
+        <div class="section-header">
+          <span class="section-tag">Analisador de Trocas</span>
+          <h3 style="color: var(--navy); font-size: 1.25rem;">Simulação & Impacto de Troca em Ambos os Times</h3>
+          <p class="section-desc">Avalie o impacto real da troca nas projeções de titulares de ambos os times, carências criadas e viabilidade de aceite.</p>
+        </div>
+
+        <div class="card" style="margin-bottom: 2rem; cursor: default;">
+          <div style="margin-bottom: 1.25rem;">
+            <label style="font-weight: 600; font-size: 0.85rem; color: var(--navy); display: block; margin-bottom: 6px;">Time Parceiro na Troca:</label>
+            <select id="tradePartnerSelect" class="form-input" style="max-width: 480px;">
+              <option value="">⚡ Auto-detectar time parceiro pelos jogadores solicitados</option>
+            </select>
+            <small style="color: var(--gray-600); font-size: 0.8rem; display: block; margin-top: 4px;">
+              Selecione o time rival explicitamente ou deixe no modo automático para detecção pelo elenco.
+            </small>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
+            <div>
+              <label style="font-weight: 600; font-size: 0.85rem; color: var(--navy); display: block; margin-bottom: 6px;">Jogadores que você cede (Give):</label>
+              <input type="text" id="tradeGiveInput" class="form-input" placeholder="Ex: Patrick Mahomes, Travis Kelce (separados por vírgula)">
+              <small style="color: var(--gray-500); font-size: 0.78rem;">Digite o nome do jogador, sobrenome ou ID Sleeper.</small>
+            </div>
+            <div>
+              <label style="font-weight: 600; font-size: 0.85rem; color: var(--navy); display: block; margin-bottom: 6px;">Jogadores que você recebe (Receive):</label>
+              <input type="text" id="tradeReceiveInput" class="form-input" placeholder="Ex: Josh Allen, CeeDee Lamb (separados por vírgula)">
+              <small style="color: var(--gray-500); font-size: 0.78rem;">Digite o nome do jogador, sobrenome ou ID Sleeper.</small>
+            </div>
+          </div>
+          <button id="btnEvaluateTrade" class="btn btn-coral" onclick="evaluateTrade()">Avaliar Proposta de Troca</button>
+        </div>
+
+        <div id="tradeResultCard" class="card" style="display: none; cursor: default;">
+          <!-- Top Verdict & Win-Win Score Header -->
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 10px; border-bottom: 1px solid var(--gray-200); padding-bottom: 1rem;">
+            <div>
+              <span class="section-tag" style="margin-bottom: 4px;">Diagnóstico do General Manager</span>
+              <h4 style="color: var(--navy); font-size: 1.3rem; margin: 0;">Avaliação da Troca</h4>
+            </div>
+            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+              <span id="tradeVerdictBadge" class="card-badge card-badge-coral" style="font-size: 0.9rem; padding: 6px 14px;">FAVORÁVEL</span>
+              <span id="tradeFeasibilityBadge" class="card-badge" style="font-size: 0.9rem; padding: 6px 14px; background: #e0e7ff; color: #3730a3; font-weight: 600;">🤝 Viabilidade: Alta</span>
+            </div>
+          </div>
+
+          <!-- Summary text -->
+          <div style="background: var(--bg-soft); border-left: 4px solid var(--coral); padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem;">
+            <p id="tradeSummaryText" style="margin: 0; font-weight: 500; font-size: 0.95rem; color: var(--gray-800);"></p>
+          </div>
+
+          <!-- Two-Team Side-by-Side Comparison -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
+            
+            <!-- My Team Card -->
+            <div id="tradeMyTeamCard" style="border: 1px solid var(--gray-200); border-radius: 8px; padding: 1.2rem; background: #fff;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; border-bottom: 1px solid var(--gray-100); padding-bottom: 0.5rem;">
+                <div>
+                  <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--coral);">Seu Time</span>
+                  <h5 id="tradeMyTeamName" style="color: var(--navy); margin: 2px 0 0 0; font-size: 1.1rem;">Seu Time</h5>
+                </div>
+                <span id="tradeMyTeamVerdict" class="badge-status badge-healthy">Favorável</span>
+              </div>
+              
+              <!-- Starter & Total diff -->
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 1rem;">
+                <div style="background: var(--bg-soft); padding: 8px 10px; border-radius: 6px;">
+                  <span style="font-size: 0.75rem; color: var(--gray-600); display: block;">Titulares:</span>
+                  <strong id="tradeMyTeamStarterDiff" style="font-size: 1.05rem;">+0.0 pts/sem</strong>
+                </div>
+                <div style="background: var(--bg-soft); padding: 8px 10px; border-radius: 6px;">
+                  <span style="font-size: 0.75rem; color: var(--gray-600); display: block;">Elenco Total:</span>
+                  <strong id="tradeMyTeamTotalDiff" style="font-size: 1.05rem;">+0.0 pts/sem</strong>
+                </div>
+              </div>
+
+              <!-- Players Exiting & Entering -->
+              <div style="margin-bottom: 0.75rem;">
+                <span style="font-size: 0.8rem; font-weight: 600; color: var(--navy); display: block; margin-bottom: 4px;">Cede (Saem):</span>
+                <div id="tradeMyTeamGiveList" style="font-size: 0.85rem;"></div>
+              </div>
+              <div style="margin-bottom: 0.75rem;">
+                <span style="font-size: 0.8rem; font-weight: 600; color: var(--navy); display: block; margin-bottom: 4px;">Recebe (Entram):</span>
+                <div id="tradeMyTeamReceiveList" style="font-size: 0.85rem;"></div>
+              </div>
+
+              <!-- Positional Balance & Details -->
+              <div id="tradeMyTeamImpactDetails" style="font-size: 0.82rem; color: var(--gray-700); border-top: 1px dashed var(--gray-200); padding-top: 0.5rem; margin-top: 0.5rem;"></div>
+            </div>
+
+            <!-- Partner Team Card -->
+            <div id="tradePartnerTeamCard" style="border: 1px solid var(--gray-200); border-radius: 8px; padding: 1.2rem; background: #fff;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; border-bottom: 1px solid var(--gray-100); padding-bottom: 0.5rem;">
+                <div>
+                  <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--indigo);">Time Parceiro</span>
+                  <h5 id="tradePartnerTeamName" style="color: var(--navy); margin: 2px 0 0 0; font-size: 1.1rem;">Time Parceiro</h5>
+                </div>
+                <span id="tradePartnerTeamVerdict" class="badge-status badge-healthy">Neutro</span>
+              </div>
+
+              <!-- Starter & Total diff -->
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 1rem;">
+                <div style="background: var(--bg-soft); padding: 8px 10px; border-radius: 6px;">
+                  <span style="font-size: 0.75rem; color: var(--gray-600); display: block;">Titulares:</span>
+                  <strong id="tradePartnerTeamStarterDiff" style="font-size: 1.05rem;">+0.0 pts/sem</strong>
+                </div>
+                <div style="background: var(--bg-soft); padding: 8px 10px; border-radius: 6px;">
+                  <span style="font-size: 0.75rem; color: var(--gray-600); display: block;">Elenco Total:</span>
+                  <strong id="tradePartnerTeamTotalDiff" style="font-size: 1.05rem;">+0.0 pts/sem</strong>
+                </div>
+              </div>
+
+              <!-- Players Exiting & Entering for Partner -->
+              <div style="margin-bottom: 0.75rem;">
+                <span style="font-size: 0.8rem; font-weight: 600; color: var(--navy); display: block; margin-bottom: 4px;">Cede ao Parceiro (Ele Recebe):</span>
+                <div id="tradePartnerReceiveList" style="font-size: 0.85rem;"></div>
+              </div>
+              <div style="margin-bottom: 0.75rem;">
+                <span style="font-size: 0.8rem; font-weight: 600; color: var(--navy); display: block; margin-bottom: 4px;">Recebe do Parceiro (Ele Cede):</span>
+                <div id="tradePartnerGiveList" style="font-size: 0.85rem;"></div>
+              </div>
+
+              <!-- Partner Positional Balance & Details -->
+              <div id="tradePartnerImpactDetails" style="font-size: 0.82rem; color: var(--gray-700); border-top: 1px dashed var(--gray-200); padding-top: 0.5rem; margin-top: 0.5rem;"></div>
+            </div>
+
+          </div>
+
+          <!-- GM Negotiation Tips Card -->
+          <div id="tradeNegotiationTipsBox" style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 1rem 1.25rem; margin-bottom: 1rem;">
+            <div style="font-weight: 700; color: var(--navy); font-size: 0.95rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 6px;">
+              💡 <span>Dicas de Negociação do GM</span>
+            </div>
+            <div id="tradeNegotiationTipsList" style="font-size: 0.88rem; color: var(--gray-800); line-height: 1.5;"></div>
+          </div>
+
+          <!-- Risks / Warnings list -->
+          <div id="tradeRisksBox" style="display: none; background: #fff1f2; border: 1px solid #fecdd3; border-radius: 8px; padding: 1rem 1.25rem;">
+            <div style="font-weight: 700; color: #be123c; font-size: 0.9rem; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 6px;">
+              ⚠️ <span>Alertas de Roster & Composição</span>
+            </div>
+            <div id="tradeRisksList" style="font-size: 0.85rem; color: #9f1239; line-height: 1.4;"></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Tab 5: Workflows -->
+      <div id="tab-workflows" class="tab-pane">
+        <div class="section-header">
+          <span class="section-tag">Rotinas de General Manager</span>
+          <h3 style="color: var(--navy); font-size: 1.25rem;">Automação Semanal</h3>
+          <p class="section-desc">Gere os relatórios táticos estruturados para cada fase crítica da semana.</p>
+        </div>
+
+        <div style="display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap;">
+          <button class="btn btn-outline-navy" onclick="runWorkflow('tuesday')">📅 Terça: Planejamento de Waivers</button>
+          <button class="btn btn-outline-navy" onclick="runWorkflow('thursday')">🏈 Quinta: Check pré-TNF</button>
+          <button class="btn btn-coral" onclick="runWorkflow('sunday')">🔒 Domingo: Trava de Escalação</button>
+        </div>
+
+        <div id="workflowResultCard" class="card" style="display: none; cursor: default;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <h4 id="workflowHeadline" style="color: var(--navy); font-size: 1.2rem;">Relatório</h4>
+            <span id="workflowDayBadge" class="card-badge card-badge-coral">DOMINGO</span>
+          </div>
+          <pre id="workflowOutput" style="white-space: pre-wrap; font-family: inherit; font-size: 0.9rem; color: var(--gray-700); background: var(--gray-50); padding: 1.25rem; border-radius: var(--radius-sm); border: 1px solid var(--gray-200);"></pre>
+        </div>
+      </div>
+
+      <!-- Tab: Gemini Flash Dedicated View -->
+      <div id="tab-gemini" class="tab-pane">
+        <div class="section-header">
+          <span class="section-tag">Relatório Estratégico do Diretor Geral</span>
+          <h3 style="color: var(--navy); font-size: 1.25rem;">Visão Geral do General Manager (Google Gemini)</h3>
+          <p class="section-desc">Parecer analítico completo gerado pelo modelo Google Gemini Flash sobre tomadas de decisão, waivers e duelos da rodada.</p>
+        </div>
+        <div id="geminiTabDetailContent" class="card" style="padding: 1.5rem; line-height: 1.7;">
+          <p style="color: var(--gray-600);">Carregando parecer do General Manager...</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Auth Modal (Login / First Access / Reset) -->
+  <div id="authModal" class="modal-overlay" style="display: none;">
+    <div class="modal-card">
+      <button class="modal-close-btn" onclick="closeAuthModal()">✕</button>
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1.25rem;">
+        <span class="brand-badge">Persone</span>
+        <h3 style="color: var(--navy); font-size: 1.35rem;">Acesso ao Sistema</h3>
+      </div>
+
+      <!-- Auth Tabs -->
+      <div class="tabs-nav" style="margin-bottom: 1.5rem;">
+        <button class="tab-btn active" id="authTabBtnLogin" onclick="switchAuthTab('login')">Entrar</button>
+        <button class="tab-btn" id="authTabBtnFirstAccess" onclick="switchAuthTab('first-access')">Primeiro Acesso</button>
+        <button class="tab-btn" id="authTabBtnReset" onclick="switchAuthTab('reset')">Redefinir Senha</button>
+      </div>
+
+      <!-- Tab: Login -->
+      <div id="authPaneLogin">
+        <p style="font-size: 0.82rem; color: var(--gray-600); margin-bottom: 1rem; background: var(--gray-100); padding: 8px 12px; border-radius: 6px; border-left: 3px solid var(--navy);">
+          🔒 Acesso restrito exclusivamente a <strong>emails pré-cadastrados</strong> pelo administrador.
+        </p>
+        <form onsubmit="handleLogin(event)">
+          <div class="form-group">
+            <label class="form-label">Email Autorizado:</label>
+            <input type="email" id="loginEmail" class="form-input" required placeholder="sacramento.unb@gmail.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Senha:</label>
+            <input type="password" id="loginPassword" class="form-input" required placeholder="••••••••">
+          </div>
+          <div id="loginAlert" class="alert-box" style="display: none; padding: 10px; margin-bottom: 1rem;"></div>
+          <button type="submit" class="btn btn-coral" style="width: 100%;">Entrar na Plataforma</button>
+        </form>
+        <div style="text-align: center; margin-top: 1rem; font-size: 0.85rem;">
+          <a href="#" style="color: var(--coral); text-decoration: none; font-weight: 600;" onclick="switchAuthTab('first-access')">Primeiro acesso? Ative sua senha aqui →</a>
+        </div>
+      </div>
+
+      <!-- Tab: First Access -->
+      <div id="authPaneFirstAccess" style="display: none;">
+        <p style="font-size: 0.85rem; color: var(--gray-600); margin-bottom: 1.25rem; background: rgba(240,90,36,0.06); padding: 10px 12px; border-radius: 6px; border-left: 3px solid var(--coral);">
+          ⚠️ <strong>Atenção:</strong> Apenas emails <strong>previamente cadastrados pelo administrador</strong> (<code>sacramento.unb@gmail.com</code>) podem criar senha e ativar o acesso. Se você ainda não foi pré-cadastrado, solicite autorização ao administrador.
+        </p>
+        <form onsubmit="handleFirstAccess(event)">
+          <div class="form-group">
+            <label class="form-label">Email Pré-Cadastrado:</label>
+            <input type="email" id="firstAccessEmail" class="form-input" required placeholder="sacramento.unb@gmail.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Criar Senha (mínimo 6 caracteres):</label>
+            <input type="password" id="firstAccessPassword" class="form-input" required minlength="6" placeholder="••••••••">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Confirmar Senha:</label>
+            <input type="password" id="firstAccessConfirm" class="form-input" required minlength="6" placeholder="••••••••">
+          </div>
+          <div id="firstAccessAlert" class="alert-box" style="display: none; padding: 10px; margin-bottom: 1rem;"></div>
+          <button type="submit" class="btn btn-coral" style="width: 100%;">Ativar Minha Conta & Salvar Senha</button>
+        </form>
+      </div>
+
+      <!-- Tab: Reset Password -->
+      <div id="authPaneReset" style="display: none;">
+        <p style="font-size: 0.85rem; color: var(--gray-600); margin-bottom: 1.25rem;">
+          Insira o token de redefinição fornecido pelo administrador (<strong>sacramento.unb@gmail.com</strong>) para cadastrar sua nova senha.
+        </p>
+        <form onsubmit="handleResetPassword(event)">
+          <div class="form-group">
+            <label class="form-label">Token de Redefinição:</label>
+            <input type="text" id="resetTokenInput" class="form-input" required placeholder="Ex: a1b2c3d4e5f6...">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Nova Senha (mínimo 6 caracteres):</label>
+            <input type="password" id="resetNewPassword" class="form-input" required minlength="6" placeholder="••••••••">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Confirmar Nova Senha:</label>
+            <input type="password" id="resetConfirmPassword" class="form-input" required minlength="6" placeholder="••••••••">
+          </div>
+          <div id="resetAlert" class="alert-box" style="display: none; padding: 10px; margin-bottom: 1rem;"></div>
+          <button type="submit" class="btn btn-coral" style="width: 100%;">Redefinir Minha Senha</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Management Modal (Strictly restricted to sacramento.unb@gmail.com) -->
+  <div id="adminModal" class="modal-overlay" style="display: none;">
+    <div class="modal-card modal-card-lg">
+      <button class="modal-close-btn" onclick="closeAdminModal()">✕</button>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <div>
+          <span class="section-tag">Painel de Controle</span>
+          <h2 style="color: var(--navy); font-size: 1.4rem;">Gestão de Usuários (Administrador)</h2>
+          <p style="font-size: 0.85rem; color: var(--gray-600);">Área restrita a <strong>sacramento.unb@gmail.com</strong>.</p>
+        </div>
+      </div>
+
+      <!-- Section: Register User -->
+      <div class="card" style="margin-bottom: 1.5rem; background: var(--gray-50); cursor: default;">
+        <h4 style="color: var(--navy); margin-bottom: 6px;">Cadastrar Novo Usuário</h4>
+        <p style="font-size: 0.85rem; color: var(--gray-600); margin-bottom: 12px;">
+          Cadastre o endereço de email. O usuário criará sua senha segura no primeiro acesso.
+        </p>
+        <form onsubmit="handleAdminRegisterUser(event)" style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <input type="email" id="adminNewUserEmail" class="form-input" style="flex: 1; min-width: 260px;" required placeholder="email.usuario@persone.com">
+          <button type="submit" class="btn btn-coral">Cadastrar Email</button>
+        </form>
+        <div id="adminRegisterAlert" class="alert-box" style="display: none; margin-top: 10px; padding: 10px;"></div>
+      </div>
+
+      <!-- Generated Token Display Box -->
+      <div id="adminTokenDisplayBox" class="alert-box" style="display: none; background: rgba(240, 90, 36, 0.1); border-left-color: var(--coral); margin-bottom: 1.5rem;">
+        <h4 style="color: var(--coral);">Token de Redefinição Gerado</h4>
+        <p id="adminTokenDisplayText" style="font-family: monospace; font-size: 1.1rem; margin-top: 6px; font-weight: 700; color: var(--navy); user-select: all;"></p>
+        <p style="font-size: 0.8rem; color: var(--gray-600); margin-top: 4px;">Envie este token para o usuário redefinir sua senha na aba "Redefinir Senha".</p>
+      </div>
+
+      <!-- Section: List Users -->
+      <div class="section-header" style="margin-bottom: 0.75rem;">
+        <h4 style="color: var(--navy);">Usuários Registrados</h4>
+      </div>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Email</th>
+              <th>Perfil</th>
+              <th>Status</th>
+              <th>Data de Cadastro</th>
+              <th style="text-align: right;">Ações</th>
+            </tr>
+          </thead>
+          <tbody id="adminUsersTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentUser = null;
+    let currentLeagueId = null;
+    let currentRosterId = null;
+    let currentSeason = null;
+    let availableSeasons = [];
+    let currentWeekSelected = null;
+    let authToken = localStorage.getItem('session_token') || '';
+    let currentLeagueTeams = [];
+
+    // ==========================================
+    // THEMES BY NFL TEAM (All 32 Franchises)
+    // ==========================================
+    const NFL_DIVISIONS = {
+      "AFC Leste": [
+        "Buffalo Bills",
+        "Miami Dolphins",
+        "New England Patriots",
+        "New York Jets"
+      ],
+      "AFC Norte": [
+        "Baltimore Ravens",
+        "Cincinnati Bengals",
+        "Cleveland Browns",
+        "Pittsburgh Steelers"
+      ],
+      "AFC Sul": [
+        "Houston Texans",
+        "Indianapolis Colts",
+        "Jacksonville Jaguars",
+        "Tennessee Titans"
+      ],
+      "AFC Oeste": [
+        "Denver Broncos",
+        "Kansas City Chiefs",
+        "Las Vegas Raiders",
+        "Los Angeles Chargers"
+      ],
+      "NFC Leste": [
+        "Dallas Cowboys",
+        "New York Giants",
+        "Philadelphia Eagles",
+        "Washington Commanders"
+      ],
+      "NFC Norte": [
+        "Chicago Bears",
+        "Detroit Lions",
+        "Green Bay Packers",
+        "Minnesota Vikings"
+      ],
+      "NFC Sul": [
+        "Atlanta Falcons",
+        "Carolina Panthers",
+        "New Orleans Saints",
+        "Tampa Bay Buccaneers"
+      ],
+      "NFC Oeste": [
+        "Arizona Cardinals",
+        "Los Angeles Rams",
+        "San Francisco 49ers",
+        "Seattle Seahawks"
+      ]
+    };
+
+    const TEAM_THEMES = {
+      "Persone (Padrão)": {
+        name: "Persone (Padrão)",
+        badge: "Persone",
+        navy: "#062744",
+        navyLight: "#0d3860",
+        navyDark: "#031728",
+        coral: "#F05A24",
+        coralHover: "#d84b1a",
+        coralLight: "rgba(240, 90, 36, 0.12)",
+        coralText: "#ffffff",
+        indigo: "#150089",
+        indigoLight: "rgba(21, 0, 137, 0.08)"
+      },
+
+      // --- AFC LESTE ---
+      "Buffalo Bills": {
+        name: "Buffalo Bills",
+        badge: "Bills",
+        navy: "#00338D",
+        navyLight: "#0a47b8",
+        navyDark: "#001e54",
+        coral: "#C60C30",
+        coralHover: "#a50a28",
+        coralLight: "rgba(198, 12, 48, 0.16)",
+        coralText: "#ffffff",
+        indigo: "#00205B",
+        indigoLight: "rgba(0, 32, 91, 0.12)"
+      },
+      "Miami Dolphins": {
+        name: "Miami Dolphins",
+        badge: "Dolphins",
+        navy: "#008E97",
+        navyLight: "#00b2bd",
+        navyDark: "#005a61",
+        coral: "#FC4C02",
+        coralHover: "#d83f00",
+        coralLight: "rgba(252, 76, 2, 0.18)",
+        coralText: "#ffffff",
+        indigo: "#005778",
+        indigoLight: "rgba(0, 87, 120, 0.12)"
+      },
+      "New England Patriots": {
+        name: "New England Patriots",
+        badge: "Patriots",
+        navy: "#002244",
+        navyLight: "#0a386c",
+        navyDark: "#001124",
+        coral: "#C60C30",
+        coralHover: "#a50a28",
+        coralLight: "rgba(198, 12, 48, 0.16)",
+        coralText: "#ffffff",
+        indigo: "#B0B7BC",
+        indigoLight: "rgba(176, 183, 188, 0.14)"
+      },
+      "New York Jets": {
+        name: "New York Jets",
+        badge: "Jets",
+        navy: "#125740",
+        navyLight: "#1c7a5b",
+        navyDark: "#0a3627",
+        coral: "#008E97",
+        coralHover: "#00737a",
+        coralLight: "rgba(0, 142, 151, 0.18)",
+        coralText: "#ffffff",
+        indigo: "#000000",
+        indigoLight: "rgba(0, 0, 0, 0.14)"
+      },
+
+      // --- AFC NORTE ---
+      "Baltimore Ravens": {
+        name: "Baltimore Ravens",
+        badge: "Ravens",
+        navy: "#241773",
+        navyLight: "#3524a6",
+        navyDark: "#150d44",
+        coral: "#9E7C0C",
+        coralHover: "#82660a",
+        coralLight: "rgba(158, 124, 12, 0.20)",
+        coralText: "#ffffff",
+        indigo: "#000000",
+        indigoLight: "rgba(0, 0, 0, 0.14)"
+      },
+      "Cincinnati Bengals": {
+        name: "Cincinnati Bengals",
+        badge: "Bengals",
+        navy: "#111111",
+        navyLight: "#262626",
+        navyDark: "#000000",
+        coral: "#FB4F14",
+        coralHover: "#d83f0b",
+        coralLight: "rgba(251, 79, 20, 0.16)",
+        coralText: "#ffffff",
+        indigo: "#383838",
+        indigoLight: "rgba(56, 56, 56, 0.14)"
+      },
+      "Cleveland Browns": {
+        name: "Cleveland Browns",
+        badge: "Browns",
+        navy: "#311D00",
+        navyLight: "#4d2e00",
+        navyDark: "#1a0f00",
+        coral: "#FF3C00",
+        coralHover: "#d63200",
+        coralLight: "rgba(255, 60, 0, 0.16)",
+        coralText: "#ffffff",
+        indigo: "#6B3E00",
+        indigoLight: "rgba(107, 62, 0, 0.12)"
+      },
+      "Pittsburgh Steelers": {
+        name: "Pittsburgh Steelers",
+        badge: "Steelers",
+        navy: "#101820",
+        navyLight: "#223140",
+        navyDark: "#060a0d",
+        coral: "#FFB612",
+        coralHover: "#d99b0f",
+        coralLight: "rgba(255, 182, 18, 0.20)",
+        coralText: "#101820",
+        indigo: "#00539B",
+        indigoLight: "rgba(0, 83, 155, 0.12)"
+      },
+
+      // --- AFC SUL ---
+      "Houston Texans": {
+        name: "Houston Texans",
+        badge: "Texans",
+        navy: "#03202F",
+        navyLight: "#0b3d59",
+        navyDark: "#011018",
+        coral: "#A71930",
+        coralHover: "#871427",
+        coralLight: "rgba(167, 25, 48, 0.16)",
+        coralText: "#ffffff",
+        indigo: "#184E77",
+        indigoLight: "rgba(24, 78, 119, 0.12)"
+      },
+      "Indianapolis Colts": {
+        name: "Indianapolis Colts",
+        badge: "Colts",
+        navy: "#002C5F",
+        navyLight: "#00428f",
+        navyDark: "#001733",
+        coral: "#0077D8",
+        coralHover: "#005fb0",
+        coralLight: "rgba(0, 119, 216, 0.18)",
+        coralText: "#ffffff",
+        indigo: "#A2AAAD",
+        indigoLight: "rgba(162, 170, 173, 0.14)"
+      },
+      "Jacksonville Jaguars": {
+        name: "Jacksonville Jaguars",
+        badge: "Jaguars",
+        navy: "#006778",
+        navyLight: "#008ca3",
+        navyDark: "#003e48",
+        coral: "#D7A22A",
+        coralHover: "#b5861f",
+        coralLight: "rgba(215, 162, 42, 0.20)",
+        coralText: "#101820",
+        indigo: "#101820",
+        indigoLight: "rgba(16, 24, 32, 0.15)"
+      },
+      "Tennessee Titans": {
+        name: "Tennessee Titans",
+        badge: "Titans",
+        navy: "#0C2340",
+        navyLight: "#163c6e",
+        navyDark: "#050e1a",
+        coral: "#4B92DB",
+        coralHover: "#3376bd",
+        coralLight: "rgba(75, 146, 219, 0.18)",
+        coralText: "#ffffff",
+        indigo: "#C8102E",
+        indigoLight: "rgba(200, 16, 46, 0.12)"
+      },
+
+      // --- AFC OESTE ---
+      "Denver Broncos": {
+        name: "Denver Broncos",
+        badge: "Broncos",
+        navy: "#002244",
+        navyLight: "#0a3c75",
+        navyDark: "#001020",
+        coral: "#FB4F14",
+        coralHover: "#d83f0b",
+        coralLight: "rgba(251, 79, 20, 0.18)",
+        coralText: "#ffffff",
+        indigo: "#00509D",
+        indigoLight: "rgba(0, 80, 157, 0.12)"
+      },
+      "Kansas City Chiefs": {
+        name: "Kansas City Chiefs",
+        badge: "Chiefs",
+        navy: "#940015",
+        navyLight: "#be0a24",
+        navyDark: "#52000c",
+        coral: "#FFB81C",
+        coralHover: "#d99a0f",
+        coralLight: "rgba(255, 184, 28, 0.20)",
+        coralText: "#101820",
+        indigo: "#E31837",
+        indigoLight: "rgba(227, 24, 55, 0.14)"
+      },
+      "Las Vegas Raiders": {
+        name: "Las Vegas Raiders",
+        badge: "Raiders",
+        navy: "#141414",
+        navyLight: "#2c2c2c",
+        navyDark: "#050505",
+        coral: "#A5ACAF",
+        coralHover: "#8b9295",
+        coralLight: "rgba(165, 172, 175, 0.20)",
+        coralText: "#000000",
+        indigo: "#4A4F52",
+        indigoLight: "rgba(74, 79, 82, 0.14)"
+      },
+      "Los Angeles Chargers": {
+        name: "Los Angeles Chargers",
+        badge: "Chargers",
+        navy: "#0080C6",
+        navyLight: "#1ca2ea",
+        navyDark: "#004c75",
+        coral: "#FFC20E",
+        coralHover: "#d9a205",
+        coralLight: "rgba(255, 194, 14, 0.22)",
+        coralText: "#002244",
+        indigo: "#002244",
+        indigoLight: "rgba(0, 34, 68, 0.15)"
+      },
+
+      // --- NFC LESTE ---
+      "Dallas Cowboys": {
+        name: "Dallas Cowboys",
+        badge: "Cowboys",
+        navy: "#003594",
+        navyLight: "#0a4bbd",
+        navyDark: "#001d52",
+        coral: "#869397",
+        coralHover: "#6f7b7f",
+        coralLight: "rgba(134, 147, 151, 0.20)",
+        coralText: "#ffffff",
+        indigo: "#041E42",
+        indigoLight: "rgba(4, 30, 66, 0.14)"
+      },
+      "New York Giants": {
+        name: "New York Giants",
+        badge: "Giants",
+        navy: "#0B2265",
+        navyLight: "#16389e",
+        navyDark: "#040d26",
+        coral: "#A71930",
+        coralHover: "#871427",
+        coralLight: "rgba(167, 25, 48, 0.16)",
+        coralText: "#ffffff",
+        indigo: "#1F387E",
+        indigoLight: "rgba(31, 56, 126, 0.14)"
+      },
+      "Philadelphia Eagles": {
+        name: "Philadelphia Eagles",
+        badge: "Eagles",
+        navy: "#004C54",
+        navyLight: "#0a6d79",
+        navyDark: "#002429",
+        coral: "#A5ACAF",
+        coralHover: "#8b9295",
+        coralLight: "rgba(165, 172, 175, 0.20)",
+        coralText: "#00282C",
+        indigo: "#00282C",
+        indigoLight: "rgba(0, 40, 44, 0.15)"
+      },
+      "Washington Commanders": {
+        name: "Washington Commanders",
+        badge: "Commanders",
+        navy: "#5A1414",
+        navyLight: "#7d1e1e",
+        navyDark: "#330808",
+        coral: "#FFB612",
+        coralHover: "#d99a08",
+        coralLight: "rgba(255, 182, 18, 0.20)",
+        coralText: "#380B0B",
+        indigo: "#380B0B",
+        indigoLight: "rgba(56, 11, 11, 0.15)"
+      },
+
+      // --- NFC NORTE ---
+      "Chicago Bears": {
+        name: "Chicago Bears",
+        badge: "Bears",
+        navy: "#0B162A",
+        navyLight: "#162b4f",
+        navyDark: "#040810",
+        coral: "#C83803",
+        coralHover: "#a52d00",
+        coralLight: "rgba(200, 56, 3, 0.18)",
+        coralText: "#ffffff",
+        indigo: "#1F3254",
+        indigoLight: "rgba(31, 50, 84, 0.14)"
+      },
+      "Detroit Lions": {
+        name: "Detroit Lions",
+        badge: "Lions",
+        navy: "#0076B6",
+        navyLight: "#1399e2",
+        navyDark: "#00446b",
+        coral: "#B0B7BC",
+        coralHover: "#969d01",
+        coralLight: "rgba(176, 183, 188, 0.20)",
+        coralText: "#002A44",
+        indigo: "#002A44",
+        indigoLight: "rgba(0, 42, 68, 0.15)"
+      },
+      "Green Bay Packers": {
+        name: "Green Bay Packers",
+        badge: "Packers",
+        navy: "#203731",
+        navyLight: "#2e5249",
+        navyDark: "#101d1a",
+        coral: "#FFB612",
+        coralHover: "#d99a0a",
+        coralLight: "rgba(255, 182, 18, 0.20)",
+        coralText: "#152622",
+        indigo: "#152622",
+        indigoLight: "rgba(21, 38, 34, 0.15)"
+      },
+      "Minnesota Vikings": {
+        name: "Minnesota Vikings",
+        badge: "Vikings",
+        navy: "#4F2683",
+        navyLight: "#6e38b3",
+        navyDark: "#2d134d",
+        coral: "#FFC62F",
+        coralHover: "#d9a51e",
+        coralLight: "rgba(255, 198, 47, 0.20)",
+        coralText: "#2E1450",
+        indigo: "#2E1450",
+        indigoLight: "rgba(46, 20, 80, 0.15)"
+      },
+
+      // --- NFC SUL ---
+      "Atlanta Falcons": {
+        name: "Atlanta Falcons",
+        badge: "Falcons",
+        navy: "#141414",
+        navyLight: "#2c2c2c",
+        navyDark: "#050505",
+        coral: "#A71930",
+        coralHover: "#851224",
+        coralLight: "rgba(167, 25, 48, 0.18)",
+        coralText: "#ffffff",
+        indigo: "#4A0D15",
+        indigoLight: "rgba(74, 13, 21, 0.15)"
+      },
+      "Carolina Panthers": {
+        name: "Carolina Panthers",
+        badge: "Panthers",
+        navy: "#101820",
+        navyLight: "#223140",
+        navyDark: "#060a0d",
+        coral: "#0085CA",
+        coralHover: "#006ea8",
+        coralLight: "rgba(0, 133, 202, 0.20)",
+        coralText: "#ffffff",
+        indigo: "#005080",
+        indigoLight: "rgba(0, 80, 128, 0.14)"
+      },
+      "New Orleans Saints": {
+        name: "New Orleans Saints",
+        badge: "Saints",
+        navy: "#101820",
+        navyLight: "#242e38",
+        navyDark: "#05070a",
+        coral: "#D3BC8D",
+        coralHover: "#b59e70",
+        coralLight: "rgba(211, 188, 141, 0.22)",
+        coralText: "#101820",
+        indigo: "#332D24",
+        indigoLight: "rgba(51, 45, 36, 0.14)"
+      },
+      "Tampa Bay Buccaneers": {
+        name: "Tampa Bay Buccaneers",
+        badge: "Bucs",
+        navy: "#34302D",
+        navyLight: "#4f4945",
+        navyDark: "#1a1816",
+        coral: "#D50A0A",
+        coralHover: "#b00707",
+        coralLight: "rgba(213, 10, 10, 0.18)",
+        coralText: "#ffffff",
+        indigo: "#FF7900",
+        indigoLight: "rgba(255, 121, 0, 0.15)"
+      },
+
+      // --- NFC OESTE ---
+      "Arizona Cardinals": {
+        name: "Arizona Cardinals",
+        badge: "Cardinals",
+        navy: "#78182E",
+        navyLight: "#a12340",
+        navyDark: "#470b18",
+        coral: "#FFB612",
+        coralHover: "#d99a0a",
+        coralLight: "rgba(255, 182, 18, 0.20)",
+        coralText: "#3D0713",
+        indigo: "#3D0713",
+        indigoLight: "rgba(61, 7, 19, 0.15)"
+      },
+      "Los Angeles Rams": {
+        name: "Los Angeles Rams",
+        badge: "Rams",
+        navy: "#003594",
+        navyLight: "#0a4ed4",
+        navyDark: "#001e54",
+        coral: "#FFA300",
+        coralHover: "#d98800",
+        coralLight: "rgba(255, 163, 0, 0.22)",
+        coralText: "#001F5B",
+        indigo: "#001F5B",
+        indigoLight: "rgba(0, 31, 91, 0.15)"
+      },
+      "San Francisco 49ers": {
+        name: "San Francisco 49ers",
+        badge: "49ers",
+        navy: "#940000",
+        navyLight: "#be0a0a",
+        navyDark: "#590000",
+        coral: "#B3995D",
+        coralHover: "#947d47",
+        coralLight: "rgba(179, 153, 93, 0.22)",
+        coralText: "#ffffff",
+        indigo: "#4D0000",
+        indigoLight: "rgba(77, 0, 0, 0.15)"
+      },
+      "Seattle Seahawks": {
+        name: "Seattle Seahawks",
+        badge: "Seahawks",
+        navy: "#002244",
+        navyLight: "#0a3a6e",
+        navyDark: "#001124",
+        coral: "#69BE28",
+        coralHover: "#549d1e",
+        coralLight: "rgba(105, 190, 40, 0.22)",
+        coralText: "#002244",
+        indigo: "#4C6A92",
+        indigoLight: "rgba(76, 106, 146, 0.14)"
+      }
+    };
+
+    let activeThemeName = localStorage.getItem('sleeper_agent_theme') || 'Persone (Padrão)';
+
+    function getTeamTheme(name) {
+      if (!name) return TEAM_THEMES["Persone (Padrão)"];
+      if (TEAM_THEMES[name]) return TEAM_THEMES[name];
+      const normalized = name.trim().toLowerCase();
+      for (const [key, theme] of Object.entries(TEAM_THEMES)) {
+        if (key.toLowerCase() === normalized) return theme;
+        if (theme.badge && theme.badge.toLowerCase() === normalized) return theme;
+      }
+      return TEAM_THEMES["Persone (Padrão)"];
+    }
+
+    function applyTheme(teamName, save = true) {
+      const theme = getTeamTheme(teamName);
+      activeThemeName = theme.name;
+      const root = document.documentElement;
+
+      root.style.setProperty('--navy', theme.navy);
+      root.style.setProperty('--navy-light', theme.navyLight);
+      root.style.setProperty('--navy-dark', theme.navyDark);
+      root.style.setProperty('--coral', theme.coral);
+      root.style.setProperty('--coral-hover', theme.coralHover);
+      root.style.setProperty('--coral-light', theme.coralLight);
+      root.style.setProperty('--coral-text', theme.coralText || '#ffffff');
+      root.style.setProperty('--indigo', theme.indigo);
+      root.style.setProperty('--indigo-light', theme.indigoLight);
+
+      const badge = document.getElementById('navbarBrandBadge');
+      if (badge) {
+        badge.innerText = theme.badge || theme.name.split(' ')[0];
+      }
+
+      const select = document.getElementById('themeSelector');
+      if (select && select.value !== theme.name) {
+        let exists = false;
+        for (let opt of select.options) {
+          if (opt.value === theme.name) { exists = true; break; }
+        }
+        if (!exists) {
+          const opt = document.createElement('option');
+          opt.value = theme.name;
+          opt.innerText = theme.name;
+          select.appendChild(opt);
+        }
+        select.value = theme.name;
+      }
+
+      if (save) {
+        localStorage.setItem('sleeper_agent_theme', theme.name);
+      }
+    }
+
+    function initThemeSelector() {
+      const select = document.getElementById('themeSelector');
+      if (!select) return;
+
+      const savedTheme = localStorage.getItem('sleeper_agent_theme') || activeThemeName || 'Persone (Padrão)';
+
+      let html = `<option value="Persone (Padrão)">Persone (Padrão)</option>`;
+
+      for (const [division, teams] of Object.entries(NFL_DIVISIONS)) {
+        html += `<optgroup label="${division}">`;
+        for (const team of teams) {
+          const isSel = (team === savedTheme) ? ' selected' : '';
+          html += `<option value="${team}"${isSel}>${team}</option>`;
+        }
+        html += `</optgroup>`;
+      }
+
+      select.innerHTML = html;
+      applyTheme(savedTheme, false);
+    }
+
+    // Initialize themes immediately on load
+    initThemeSelector();
+
+    // Authenticated fetch wrapper
+    async function authFetch(url, options = {}) {
+      options.headers = options.headers || {};
+      if (authToken) {
+        options.headers['Authorization'] = `Bearer ${authToken}`;
+      }
+      const resp = await fetch(url, options);
+      if (resp.status === 401) {
+        currentUser = null;
+        authToken = '';
+        localStorage.removeItem('session_token');
+        updateNavAuth();
+        openAuthModal('login');
+        throw new Error('Sessão expirada ou não autenticado.');
+      }
+      return resp;
+    }
+
+    // Check Auth Status on Load
+    async function checkAuthStatus() {
+      try {
+        const resp = await authFetch('/api/auth/me');
+        const data = await resp.json();
+        if (data.authenticated && data.user) {
+          currentUser = data.user;
+          updateNavAuth();
+          closeAuthModal();
+          return true;
+        }
+      } catch (e) {
+        console.log('Unauthenticated:', e.message);
+      }
+      currentUser = null;
+      updateNavAuth();
+      openAuthModal('login');
+      return false;
+    }
+
+    // Update Nav Auth Area
+    function updateNavAuth() {
+      const navAuth = document.getElementById('navAuthArea');
+      if (!currentUser) {
+        navAuth.innerHTML = `
+          <button class="btn btn-outline-navy btn-sm" style="color: #fff; border-color: rgba(255,255,255,0.4);" onclick="openAuthModal('first-access')">Primeiro Acesso</button>
+          <button class="btn btn-coral btn-sm" onclick="openAuthModal('login')">Entrar</button>
+        `;
+      } else {
+        const isAdmin = currentUser.is_admin || (currentUser.email.toLowerCase() === 'sacramento.unb@gmail.com');
+        navAuth.innerHTML = `
+          <span style="font-size: 0.85rem; color: var(--gray-300); display: flex; align-items: center; gap: 6px;">
+            <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #10b981;"></span>
+            <strong>${currentUser.email}</strong> ${isAdmin ? '<span class="card-badge card-badge-coral" style="font-size: 0.7rem; padding: 2px 6px;">ADMIN</span>' : ''}
+          </span>
+          ${isAdmin ? `<button class="btn btn-outline-navy btn-sm" style="color: #fff; border-color: var(--coral);" onclick="openAdminModal()">⚙️ Gestão de Usuários</button>` : ''}
+          <button class="btn btn-outline-navy btn-sm" style="color: #fff; border-color: rgba(255,255,255,0.3);" onclick="logoutUser()">Sair</button>
+        `;
+      }
+    }
+
+    // Seasons & Single League Loading
+    async function loadLeagueAndSeasons(selectedSeason = null, forceRefresh = false) {
+      try {
+        const resp = await authFetch('/api/league/seasons');
+        const data = await resp.json();
+        if (data.error) throw new Error(data.error);
+
+        availableSeasons = data.seasons || [];
+
+        let targetSeasonObj = null;
+        if (selectedSeason) {
+          targetSeasonObj = availableSeasons.find(s => s.season === selectedSeason);
+        }
+        if (!targetSeasonObj && availableSeasons.length > 0) {
+          targetSeasonObj = availableSeasons.find(s => s.is_current) || availableSeasons[0];
+        }
+
+        if (!targetSeasonObj) {
+          document.getElementById('teamsGrid').innerHTML = '<div class="empty-state">Nenhuma temporada encontrada para esta liga.</div>';
+          return;
+        }
+
+        currentSeason = targetSeasonObj.season;
+        currentLeagueId = targetSeasonObj.league_id;
+
+        renderSeasonSelector();
+        await loadTeamsForLeague(currentLeagueId, targetSeasonObj.name, targetSeasonObj.season, forceRefresh);
+      } catch (err) {
+        console.error('Error loading league seasons:', err);
+      }
+    }
+
+    function renderSeasonSelector() {
+      const container = document.getElementById('seasonSelector');
+      container.innerHTML = availableSeasons.map(s => {
+        const isActive = (s.season === currentSeason);
+        const activeClass = isActive ? 'btn-coral' : 'btn-outline-navy';
+        return `<button class="btn ${activeClass} btn-sm" onclick="changeSeason('${s.season}')">${s.season}${s.is_current ? ' (Atual)' : ''}</button>`;
+      }).join('');
+    }
+
+    async function changeSeason(season) {
+      if (season === currentSeason) return;
+      document.getElementById('teamsSection').style.display = 'block';
+      document.getElementById('dashboardSection').style.display = 'none';
+      await loadLeagueAndSeasons(season);
+    }
+
+    async function loadTeamsForLeague(leagueId, leagueName, season, forceRefresh = false) {
+      document.getElementById('leagueSeasonTag').innerText = `Temporada ${season}`;
+      document.getElementById('leagueHeaderTitle').innerText = `${leagueName || 'Liga'}`;
+      document.getElementById('breadcrumbs').innerHTML = `<span>Times • Temporada ${season}</span>`;
+
+      const grid = document.getElementById('teamsGrid');
+      grid.innerHTML = '<div class="spinner"></div>';
+
+      try {
+        const url = forceRefresh ? `/api/league/${leagueId}?refresh=true` : `/api/league/${leagueId}`;
+        const resp = await authFetch(url);
+        const data = await resp.json();
+
+
+        if (data.error) {
+          grid.innerHTML = `<div class="empty-state">${data.error}</div>`;
+          return;
+        }
+
+        currentLeagueTeams = data.teams || [];
+
+        const cacheBadge = document.getElementById('cacheBadge');
+        if (data.cached) {
+          cacheBadge.innerHTML = '⚡ Cache SQLite';
+          cacheBadge.style.color = 'var(--indigo)';
+        } else {
+          cacheBadge.innerHTML = '🔄 Sincronizado do Sleeper';
+          cacheBadge.style.color = 'var(--coral)';
+        }
+
+        grid.innerHTML = data.teams.map((t, idx) => `
+          <div class="card" onclick="selectTeam(${t.roster_id})">
+            <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 1rem;">
+              <div class="team-avatar">
+                ${t.avatar ? `<img src="https://sleepercdn.com/avatars/thumbs/${t.avatar}" alt="${t.team_name}">` : t.team_name.charAt(0)}
+              </div>
+              <div>
+                <h4 style="color: var(--navy); font-size: 1.1rem; line-height: 1.2;">${t.team_name}</h4>
+                <span style="font-size: 0.8rem; color: var(--gray-600);">${t.owner_display_name}</span>
+              </div>
+            </div>
+            <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--gray-200); padding-top: 0.75rem; font-size: 0.85rem;">
+              <div>Campanha: <strong>${t.wins}-${t.losses}</strong></div>
+              <div>${t.is_faab ? `FAAB: <strong style="color: var(--coral);">$${t.faab_remaining}</strong>` : `Waiver: <strong style="color: var(--coral);">#${t.waiver_position || idx + 1}</strong>`}</div>
+            </div>
+            <button class="btn btn-coral btn-sm" style="width: 100%; margin-top: 1rem;">Abrir Recomendações →</button>
+          </div>
+        `).join('');
+      } catch (err) {
+        grid.innerHTML = `<div class="empty-state">${err.message}</div>`;
+      }
+    }
+
+    function resetToTeams() {
+      document.getElementById('dashboardSection').style.display = 'none';
+      document.getElementById('teamsSection').style.display = 'block';
+      document.getElementById('breadcrumbs').innerHTML = `<span>Times • Temporada ${currentSeason}</span>`;
+    }
+
+    async function forceRefreshData() {
+      if (document.getElementById('dashboardSection').style.display !== 'none' && currentRosterId) {
+        await selectTeam(currentRosterId, currentWeekSelected, true);
+      } else if (currentLeagueId) {
+        await loadLeagueAndSeasons(currentSeason, true);
+      }
+    }
+
+    async function changeMatchupWeek(week) {
+      currentWeekSelected = week;
+      selectTeam(currentRosterId, week);
+    }
+
+    // Step 2: Load Team Dashboard
+    async function selectTeam(rosterId, week = null, forceRefresh = false) {
+      currentRosterId = rosterId;
+      if (week !== null) currentWeekSelected = week;
+      populateTradePartnerSelector();
+      document.getElementById('teamsSection').style.display = 'none';
+      document.getElementById('dashboardSection').style.display = 'block';
+
+      try {
+        let url = `/api/league/${currentLeagueId}/team/${rosterId}/dashboard`;
+        const params = [];
+        if (currentWeekSelected !== null) params.push(`week=${currentWeekSelected}`);
+        if (forceRefresh) params.push('refresh=true');
+        if (params.length > 0) url += `?${params.join('&')}`;
+
+        const resp = await authFetch(url);
+        const data = await resp.json();
+
+        // Update Cache badge
+        const cacheBadge = document.getElementById('cacheBadge');
+        if (data.cached) {
+          cacheBadge.innerHTML = '⚡ Cache SQLite';
+          cacheBadge.style.color = 'var(--indigo)';
+        } else {
+          cacheBadge.innerHTML = '🔄 Sincronizado do Sleeper';
+          cacheBadge.style.color = 'var(--coral)';
+        }
+
+        // Populate Hero
+        currentLoadedTeamName = data.team.team_name;
+        document.getElementById('dashTeamName').innerText = data.team.team_name;
+        document.getElementById('dashOwner').innerText = `Proprietário: ${data.team.owner_name}`;
+        document.getElementById('statRecord').innerText = `${data.team.wins}-${data.team.losses}`;
+        document.getElementById('statPoints').innerText = `${data.team.points_for.toFixed(1)} pts`;
+        
+        if (data.team.is_faab) {
+          document.getElementById('statFaabLabel').innerText = 'FAAB Restante';
+          document.getElementById('statFaab').innerText = `$${data.team.faab_remaining}`;
+        } else {
+          document.getElementById('statFaabLabel').innerText = 'Prioridade Waiver';
+          document.getElementById('statFaab').innerText = `#${data.team.waiver_position || '--'}`;
+        }
+        document.getElementById('statOpponent').innerText = data.matchup.opponent_name || 'Bye';
+
+        // Breadcrumbs
+        document.getElementById('breadcrumbs').innerHTML = `
+          <a href="#" onclick="resetToTeams()">Times (${currentSeason})</a> &gt; 
+          <span>${data.team.team_name}</span>
+        `;
+
+        // Populate Starters
+        const startersTbody = document.getElementById('startersTableBody');
+        startersTbody.innerHTML = data.starters.map(s => {
+          let badge = '<span class="badge-status badge-healthy">Ativo</span>';
+          if (s.is_injured) badge = `<span class="badge-status badge-out">${s.injury_status || 'OUT'}</span>`;
+          else if (s.is_questionable) badge = `<span class="badge-status badge-questionable">Questionável</span>`;
+
+          return `
+            <tr>
+              <td><span class="badge-pos">${s.slot}</span></td>
+              <td><strong>${s.name}</strong></td>
+              <td>${s.team || 'FA'}</td>
+              <td>${badge}</td>
+              <td style="font-weight: 700; color: var(--navy);">${s.projected_points.toFixed(1)} pts</td>
+              <td style="color: var(--gray-600);">${s.floor.toFixed(1)} - ${s.ceiling.toFixed(1)}</td>
+            </tr>
+          `;
+        }).join('');
+
+        // Populate Bench
+        const benchTbody = document.getElementById('benchTableBody');
+        benchTbody.innerHTML = data.bench.map(b => `
+          <tr>
+            <td><span class="badge-pos" style="background: var(--gray-600);">BN</span></td>
+            <td>${b.name}</td>
+            <td>${b.team || 'FA'}</td>
+            <td>${b.injury_status ? `<span class="badge-status badge-out">${b.injury_status}</span>` : '<span class="badge-status badge-healthy">Ativo</span>'}</td>
+            <td style="font-weight: 600;">${b.projected_points.toFixed(1)} pts</td>
+          </tr>
+        `).join('');
+
+        // Lineup Alerts & Swaps
+        const alertsBox = document.getElementById('lineupAlerts');
+        const alertsList = document.getElementById('lineupAlertsList');
+        if (data.lineup_optimization.warnings && data.lineup_optimization.warnings.length > 0) {
+          alertsList.innerHTML = data.lineup_optimization.warnings.map(w => `<li>${w}</li>`).join('');
+          alertsBox.style.display = 'block';
+        } else {
+          alertsBox.style.display = 'none';
+        }
+
+        const swapsCard = document.getElementById('lineupSwapsCard');
+        const swapsContainer = document.getElementById('swapsContainer');
+        const swaps = data.lineup_optimization.recommended_swaps;
+        if (swaps && swaps.length > 0) {
+          document.getElementById('projGainBadge').innerText = `+${data.lineup_optimization.potential_gain.toFixed(1)} pts ganho potencial`;
+          swapsContainer.innerHTML = swaps.map(sw => `
+            <div style="background: var(--gray-50); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--gray-200); margin-bottom: 0.75rem; display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <strong style="color: var(--coral);">ENTRA:</strong> ${sw.start_player_name} [${sw.slot}] &nbsp;|&nbsp; 
+                <strong style="color: var(--navy);">BANCO:</strong> ${sw.bench_player_name}
+                <div style="font-size: 0.8rem; color: var(--gray-600); margin-top: 4px;">Motivo: ${sw.reason} (+${sw.projected_diff.toFixed(1)} pts)</div>
+              </div>
+              <button class="btn btn-coral btn-sm" onclick="executeAction('${sw.action_id}')">Aprovar & Aplicar</button>
+            </div>
+          `).join('');
+          swapsCard.style.display = 'block';
+        } else {
+          swapsCard.style.display = 'none';
+        }
+
+        // Waivers
+        document.getElementById('tabBtnWaivers').innerText = data.waivers.is_faab ? 'Waiver Wire & FAAB' : 'Waiver Wire (Prioridade)';
+        document.getElementById('waiversSectionTag').innerText = data.waivers.is_faab ? 'Waiver Wire & FAAB' : 'Waiver Wire (Sem FAAB)';
+        document.getElementById('thWaiverBid').innerText = data.waivers.is_faab ? 'Lance Recomendado (FAAB)' : 'Ordem de Reivindicação';
+
+        const waiversTbody = document.getElementById('waiversTableBody');
+        waiversTbody.innerHTML = data.waivers.targets.map((w, i) => {
+          let fitBadge = `<span class="badge-status" style="background: rgba(107, 114, 128, 0.12); color: #4b5563;">🛡️ ${w.roster_fit || 'Profundidade'}</span>`;
+          if (w.is_injury_replacement) {
+            fitBadge = `<span class="badge-status badge-out" style="font-weight: 700;">🚨 ${w.roster_fit || 'Cobre Desfalque'}</span>`;
+          } else if (w.is_starter_upgrade) {
+            fitBadge = `<span class="badge-status badge-upgrade" style="font-weight: 700;">⚡ Upgrade (+${(w.starter_upgrade_pts || 0).toFixed(1)})</span>`;
+          }
+
+          const dropDisplay = w.suggested_drop
+            ? `<strong style="color: var(--coral);">✂️ ${w.suggested_drop}</strong>`
+            : `<span style="color: var(--gray-500); font-size: 0.85rem;">-</span>`;
+
+          return `
+          <tr>
+            <td><strong style="color: var(--coral);">#${i + 1}</strong></td>
+            <td><strong>${w.name}</strong></td>
+            <td><span class="badge-pos">${w.position}</span></td>
+            <td>${w.team || 'FA'}</td>
+            <td style="font-weight: 700;">${w.projected_points.toFixed(1)} pts</td>
+            <td>${data.waivers.is_faab ? `<strong style="color: var(--coral);">$${w.recommended_faab}</strong>` : `<span class="badge-status badge-healthy">Ordem #${i + 1}</span>`}</td>
+            <td>${fitBadge}</td>
+            <td>${dropDisplay}</td>
+            <td style="font-size: 0.85rem; color: var(--gray-700);">${w.reason}</td>
+          </tr>
+        `;
+        }).join('');
+
+        // Drops
+        const dropsTbody = document.getElementById('dropsTableBody');
+        dropsTbody.innerHTML = data.waivers.drop_candidates.map(d => {
+          const situationBadge = d.is_surplus
+            ? `<span class="badge-status badge-questionable" style="font-weight: 700;">⚠️ Excedente</span>`
+            : `<span class="badge-status" style="background: rgba(107, 114, 128, 0.12); color: #6b7280;">Fim de Banco</span>`;
+          return `
+          <tr>
+            <td><strong>${d.name}</strong></td>
+            <td><span class="badge-pos" style="background: var(--gray-600);">${d.position}</span></td>
+            <td>${d.projected_points.toFixed(1)} pts</td>
+            <td>${situationBadge}</td>
+            <td style="font-size: 0.85rem; color: var(--coral);">${d.reason}</td>
+          </tr>
+        `;
+        }).join('');
+
+        // Matchup
+        const m = data.matchup;
+        const myScore = m.my_current_score;
+        const oppScore = m.opp_current_score;
+        const isFinal = m.is_final;
+        const hasScores = m.has_scores;
+
+        document.getElementById('matchupWeekTitle').innerText = `Semana ${m.week}`;
+        const badgeContainer = document.getElementById('matchupStatusBadgeContainer');
+
+        if (isFinal) {
+          badgeContainer.innerHTML = '<span class="card-badge" style="background: var(--navy); color: #fff;">ENCERRADO / FINAL</span>';
+        } else if (hasScores) {
+          badgeContainer.innerHTML = '<span class="card-badge card-badge-coral">EM ANDAMENTO</span>';
+        } else {
+          badgeContainer.innerHTML = '<span class="card-badge" style="background: var(--indigo-light); color: var(--indigo); font-weight: 700;">PRÉ-JOGO (PROJEÇÕES ATIVAS)</span>';
+        }
+
+        // Week selector buttons
+        const maxWeeks = Math.max(m.week, 4);
+        let weekButtons = '';
+        for (let w = 1; w <= maxWeeks; w++) {
+          const activeClass = (w === m.week) ? 'btn-coral' : 'btn-outline-navy';
+          weekButtons += `<button class="btn ${activeClass} btn-sm" onclick="changeMatchupWeek(${w})">Sem ${w}</button>`;
+        }
+        document.getElementById('matchupWeekSelector').innerHTML = weekButtons;
+
+        document.getElementById('matchupMyName').innerText = data.team.team_name;
+        document.getElementById('matchupMyScore').innerText = hasScores ? myScore.toFixed(2) : m.my_projected.toFixed(1);
+        document.getElementById('matchupMyScoreLabel').innerText = hasScores ? 'pts atuais' : 'pts projetados';
+        document.getElementById('matchupMyProj').innerText = hasScores 
+          ? `Projeção Pré-Jogo: ${m.my_projected.toFixed(1)} pts` 
+          : `Pontos Atuais: ${myScore.toFixed(2)} pts (Aguardando início)`;
+
+        document.getElementById('matchupOppName').innerText = m.opponent_name;
+        document.getElementById('matchupOppScore').innerText = hasScores ? oppScore.toFixed(2) : m.opp_projected.toFixed(1);
+        document.getElementById('matchupOppScoreLabel').innerText = hasScores ? 'pts atuais' : 'pts projetados';
+        document.getElementById('matchupOppProj').innerText = hasScores 
+          ? `Projeção Pré-Jogo: ${m.opp_projected.toFixed(1)} pts` 
+          : `Pontos Atuais: ${oppScore.toFixed(2)} pts (Aguardando início)`;
+
+        const diff = m.projected_diff;
+        document.getElementById('matchupDiffText').innerText = diff >= 0 
+          ? `Vantagem Projetada: +${diff.toFixed(1)} pts` 
+          : `Desvantagem Projetada: ${diff.toFixed(1)} pts`;
+        document.getElementById('matchupDiffDesc').innerText = diff >= 0 
+          ? `Seu time está projetado para vencer (${m.my_projected.toFixed(1)} vs ${m.opp_projected.toFixed(1)} pts).` 
+          : `O oponente tem vantagem projetada (${m.opp_projected.toFixed(1)} vs ${m.my_projected.toFixed(1)} pts). Considere ajustes em Flex ou waivers.`;
+
+        // Starter by starter table
+        const stTbody = document.getElementById('starterComparisonsTableBody');
+        if (m.starter_comparisons && m.starter_comparisons.length > 0) {
+          stTbody.innerHTML = m.starter_comparisons.map(c => {
+            const myWin = (c.my_actual > 0 || c.opp_actual > 0) 
+              ? (c.my_actual >= c.opp_actual) 
+              : (c.my_projected >= c.opp_projected);
+            return `
+              <tr>
+                <td><span class="badge-pos">${c.slot}</span></td>
+                <td>
+                  <strong>${c.my_player}</strong>
+                  ${c.my_team ? `<span style="font-size: 0.75rem; color: var(--gray-600); margin-left: 4px;">(${c.my_team})</span>` : ''}
+                </td>
+                <td style="text-align: right; color: var(--gray-600); font-weight: 500;">${c.my_projected.toFixed(1)}</td>
+                <td style="text-align: right; font-weight: 700; color: ${myWin ? 'var(--coral)' : 'var(--navy)'};">
+                  ${c.my_actual > 0 ? c.my_actual.toFixed(2) : '-'}
+                </td>
+                <td style="text-align: center; color: var(--gray-300); font-weight: 700;">•</td>
+                <td style="font-weight: 700; color: ${!myWin ? 'var(--coral)' : 'var(--navy)'};">
+                  ${c.opp_actual > 0 ? c.opp_actual.toFixed(2) : '-'}
+                </td>
+                <td style="color: var(--gray-600); font-weight: 500;">${c.opp_projected.toFixed(1)}</td>
+                <td style="text-align: right;">
+                  <strong>${c.opp_player}</strong>
+                  ${c.opp_team ? `<span style="font-size: 0.75rem; color: var(--gray-600); margin-left: 4px;">(${c.opp_team})</span>` : ''}
+                </td>
+              </tr>
+            `;
+          }).join('');
+        } else {
+          stTbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: var(--gray-600);">Sem dados de escalação para esta semana.</td></tr>';
+        }
+
+        // Asynchronously load Gemini Flash GM Insights
+        loadGmInsights(rosterId, currentWeekSelected, forceRefresh);
+
+      } catch (err) {
+        alert('Erro ao carregar dashboard: ' + err.message);
+      }
+    }
+
+    // Markdown Formatter for GM Insights
+    function renderMarkdown(md) {
+      if (!md) return '';
+      let html = md
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+
+      // Headers ### Title
+      html = html.replace(/^### (.*$)/gim, '<h4 style="color: var(--navy); margin-top: 1.25rem; margin-bottom: 0.5rem; font-size: 1.1rem; font-weight: 700; border-bottom: 2px solid rgba(240, 90, 36, 0.2); padding-bottom: 4px;">$1</h4>');
+      // Headers ## Title
+      html = html.replace(/^## (.*$)/gim, '<h3 style="color: var(--navy); margin-top: 1.5rem; margin-bottom: 0.5rem; font-size: 1.2rem; font-weight: 700;">$1</h3>');
+
+      // Bold **text**
+      html = html.replace(/\*\*(.*?)\*\*/gim, '<strong style="color: var(--navy);">$1</strong>');
+      // Italic *text*
+      html = html.replace(/\*(.*?)\*/gim, '<em>$1</em>');
+      // Inline code `code`
+      html = html.replace(/`([^`]+)`/gim, '<code style="background: var(--gray-100); color: var(--coral); padding: 2px 6px; border-radius: 4px; font-size: 0.85em;">$1</code>');
+
+      // Unordered lists
+      html = html.replace(/^\s*[\-\*]\s+(.*)$/gim, '<li style="margin-bottom: 4px;">$1</li>');
+      html = html.replace(/(<li.*<\/li>)/gims, '<ul style="margin: 0.5rem 0 1rem 1.25rem; list-style-type: disc;">$1</ul>');
+      html = html.replace(/<\/ul>\s*<ul style="[^"]*">/gim, '');
+
+      // Paragraphs
+      const paragraphs = html.split(/\n{2,}/);
+      html = paragraphs.map(p => {
+        p = p.trim();
+        if (!p) return '';
+        if (p.startsWith('<h') || p.startsWith('<ul') || p.startsWith('<div')) return p;
+        return `<p style="margin-bottom: 0.75rem; line-height: 1.6;">${p.replace(/\n/g, '<br>')}</p>`;
+      }).join('');
+
+      return html;
+    }
+
+    // Load Gemini Flash GM Insights
+    async function loadGmInsights(rosterId, week = null, forceRefresh = false) {
+      const card = document.getElementById('geminiInsightsCard');
+      const loading = document.getElementById('geminiLoading');
+      const content = document.getElementById('geminiContent');
+      const tabDetail = document.getElementById('geminiTabDetailContent');
+      const modelBadge = document.getElementById('geminiModelBadge');
+      const cacheBadge = document.getElementById('geminiCacheBadge');
+      const btn = document.getElementById('btnReloadGemini');
+
+      if (!card) return;
+      loading.style.display = 'block';
+      content.style.display = 'none';
+      if (btn) btn.disabled = true;
+
+      try {
+        let url = `/api/league/${currentLeagueId}/team/${rosterId}/gm-insights`;
+        const params = [];
+        if (week !== null) params.push(`week=${week}`);
+        if (forceRefresh) params.push('refresh=true');
+        if (params.length > 0) url += `?${params.join('&')}`;
+
+        const resp = await authFetch(url);
+        if (!resp.ok) {
+          let errorMsg = `Erro ${resp.status} (${resp.statusText || 'Falha de comunicação'})`;
+          try {
+            const errData = await resp.json();
+            if (errData && errData.error) errorMsg = errData.error;
+          } catch (_) {}
+          throw new Error(errorMsg);
+        }
+        const data = await resp.json();
+
+        // Model Badge
+        let modelLabel = data.model_used || 'Gemini Flash';
+        if (data.source === 'gemini') {
+          modelBadge.innerText = `✨ ${modelLabel}`;
+          modelBadge.style.background = 'var(--navy)';
+          modelBadge.style.color = '#fff';
+        } else if (data.source === 'ollama') {
+          modelBadge.innerText = `🦙 Ollama: ${modelLabel}`;
+          modelBadge.style.background = 'var(--indigo)';
+          modelBadge.style.color = '#fff';
+        } else {
+          modelBadge.innerText = `⚙️ ${modelLabel}`;
+          modelBadge.style.background = 'var(--gray-200)';
+          modelBadge.style.color = 'var(--gray-800)';
+        }
+
+        // Cache Badge
+        if (data.cached) {
+          const age = data.cache_age_seconds !== undefined ? ` (${data.cache_age_seconds}s)` : '';
+          cacheBadge.innerHTML = `⚡ Cache SQLite${age}`;
+          cacheBadge.style.color = 'var(--indigo)';
+        } else if (data.source === 'ollama') {
+          cacheBadge.innerHTML = '🟢 Ao Vivo (Ollama)';
+          cacheBadge.style.color = 'var(--indigo)';
+        } else if (data.source === 'gemini') {
+          cacheBadge.innerHTML = '🟢 Ao Vivo (Gemini)';
+          cacheBadge.style.color = 'var(--coral)';
+        } else {
+          cacheBadge.innerHTML = '🟢 Motor Heurístico';
+          cacheBadge.style.color = 'var(--gray-600)';
+        }
+
+        const formattedHtml = renderMarkdown(data.analysis || 'Nenhuma análise gerada.');
+        content.innerHTML = formattedHtml;
+        if (tabDetail) tabDetail.innerHTML = formattedHtml;
+
+      } catch (err) {
+        content.innerHTML = `
+          <div style="background: rgba(240, 90, 36, 0.08); border-left: 4px solid var(--coral); padding: 1rem; border-radius: var(--radius-sm); color: var(--navy);">
+            <strong>Aviso do Sistema:</strong> Não foi possível gerar o parecer no momento (${err.message}).
+            <div style="margin-top: 6px; font-size: 0.85rem; color: var(--gray-600);">
+              A IA de pareceres conta com contingência entre modelos Gemini Flash, modelo local Ollama e motor heurístico. Clique em <strong>Atualizar Parecer</strong> para executar novamente.
+            </div>
+          </div>
+        `;
+        if (tabDetail) tabDetail.innerHTML = content.innerHTML;
+      } finally {
+        loading.style.display = 'none';
+        content.style.display = 'block';
+        if (btn) btn.disabled = false;
+      }
+    }
+
+    function reloadGmInsights(force = true) {
+      if (currentRosterId) {
+        loadGmInsights(currentRosterId, currentWeekSelected, force);
+      }
+    }
+
+    // Trade Partner Selector Populator
+    function populateTradePartnerSelector() {
+      const select = document.getElementById('tradePartnerSelect');
+      if (!select) return;
+      const currentVal = select.value;
+      select.innerHTML = '<option value="">⚡ Auto-detectar time parceiro pelos jogadores solicitados</option>';
+      if (Array.isArray(currentLeagueTeams)) {
+        currentLeagueTeams.forEach(t => {
+          if (t.roster_id !== currentRosterId) {
+            const opt = document.createElement('option');
+            opt.value = t.roster_id;
+            opt.textContent = `${t.team_name} (${t.owner_display_name})`;
+            select.appendChild(opt);
+          }
+        });
+      }
+      if (currentVal) select.value = currentVal;
+    }
+
+    // Trade Evaluation (Two-Team Analysis)
+    async function evaluateTrade() {
+      const giveInput = document.getElementById('tradeGiveInput');
+      const receiveInput = document.getElementById('tradeReceiveInput');
+      const partnerSelect = document.getElementById('tradePartnerSelect');
+      const btn = document.getElementById('btnEvaluateTrade');
+
+      const give = giveInput.value.split(',').map(s => s.trim()).filter(Boolean);
+      const receive = receiveInput.value.split(',').map(s => s.trim()).filter(Boolean);
+
+      if (give.length === 0 || receive.length === 0) {
+        alert('Por favor, informe ao menos 1 jogador a ceder e 1 a receber.');
+        return;
+      }
+
+      const partnerRosterId = partnerSelect && partnerSelect.value ? parseInt(partnerSelect.value) : null;
+
+      try {
+        if (btn) {
+          btn.disabled = true;
+          btn.innerHTML = '<span class="spinner" style="display:inline-block; width:16px; height:16px; margin-right:6px; vertical-align:middle;"></span> Avaliando proposta...';
+        }
+
+        const resp = await authFetch(`/api/league/${currentLeagueId}/team/${currentRosterId}/trade`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            give,
+            receive,
+            partner_roster_id: partnerRosterId
+          }),
+        });
+        const data = await resp.json();
+
+        if (data.error) {
+          alert('Erro na avaliação: ' + data.error);
+          return;
+        }
+
+        const card = document.getElementById('tradeResultCard');
+
+        // Verdict Badge
+        const verdictBadge = document.getElementById('tradeVerdictBadge');
+        verdictBadge.innerText = data.verdict;
+        if (data.verdict.includes('FAVORÁVEL')) {
+          verdictBadge.className = 'card-badge card-badge-coral';
+          verdictBadge.style.background = '';
+          verdictBadge.style.color = '';
+        } else if (data.verdict.includes('DESFAVORÁVEL')) {
+          verdictBadge.className = 'card-badge';
+          verdictBadge.style.background = '#dc2626';
+          verdictBadge.style.color = '#fff';
+        } else {
+          verdictBadge.className = 'card-badge';
+          verdictBadge.style.background = '#d97706';
+          verdictBadge.style.color = '#fff';
+        }
+
+        // Feasibility Badge
+        const feasBadge = document.getElementById('tradeFeasibilityBadge');
+        const score = data.win_win_score !== undefined ? data.win_win_score : 50;
+        const feasText = data.feasibility || 'Viabilidade Indefinida';
+        feasBadge.innerText = `🤝 ${feasText} (${score}/100)`;
+        if (score >= 65) {
+          feasBadge.style.background = '#ecfdf5';
+          feasBadge.style.color = '#047857';
+          feasBadge.style.border = '1px solid #a7f3d0';
+        } else if (score >= 40) {
+          feasBadge.style.background = '#fffbeb';
+          feasBadge.style.color = '#b45309';
+          feasBadge.style.border = '1px solid #fde68a';
+        } else {
+          feasBadge.style.background = '#fef2f2';
+          feasBadge.style.color = '#b91c1c';
+          feasBadge.style.border = '1px solid #fecaca';
+        }
+
+        // Summary
+        document.getElementById('tradeSummaryText').innerText = data.summary;
+
+        // Render helper for player items
+        const renderPlayerItem = p => `
+          <div style="display: flex; justify-content: space-between; align-items: center; padding: 4px 0; border-bottom: 1px dashed var(--gray-100);">
+            <div>
+              <span class="badge-pos" style="font-size: 0.72rem; padding: 1px 5px;">${p.position}</span>
+              <strong>${p.name}</strong> <span style="font-size: 0.75rem; color: var(--gray-500);">(${p.team})</span>
+            </div>
+            <strong style="color: var(--coral); font-size: 0.85rem;">${p.projected_points.toFixed(1)} pts</strong>
+          </div>
+        `;
+
+        // My Team Data
+        const myTeam = data.my_team;
+        if (myTeam) {
+          document.getElementById('tradeMyTeamName').innerText = `${myTeam.team_name} (${myTeam.owner_name})`;
+          
+          const sDiff = myTeam.starter_projected_diff;
+          const sDiffEl = document.getElementById('tradeMyTeamStarterDiff');
+          sDiffEl.innerText = `${sDiff >= 0 ? '+' : ''}${sDiff.toFixed(1)} pts/sem`;
+          sDiffEl.style.color = sDiff > 0 ? '#059669' : (sDiff < 0 ? '#dc2626' : 'var(--gray-700)');
+
+          const tDiff = myTeam.total_projected_diff;
+          const tDiffEl = document.getElementById('tradeMyTeamTotalDiff');
+          tDiffEl.innerText = `${tDiff >= 0 ? '+' : ''}${tDiff.toFixed(1)} pts/sem`;
+          tDiffEl.style.color = tDiff > 0 ? '#059669' : (tDiff < 0 ? '#dc2626' : 'var(--gray-700)');
+
+          const vBadge = document.getElementById('tradeMyTeamVerdict');
+          vBadge.innerText = myTeam.verdict;
+          vBadge.className = 'badge-status ' + (myTeam.verdict.includes('FAVORÁVEL') ? 'badge-healthy' : (myTeam.verdict.includes('DESFAVORÁVEL') ? 'badge-out' : 'badge-questionable'));
+
+          document.getElementById('tradeMyTeamGiveList').innerHTML = data.give_players.map(renderPlayerItem).join('');
+          document.getElementById('tradeMyTeamReceiveList').innerHTML = data.receive_players.map(renderPlayerItem).join('');
+
+          let detailsHtml = '';
+          if (myTeam.surpluses && myTeam.surpluses.length > 0) {
+            detailsHtml += `<div style="margin-bottom: 3px;">✅ <strong>Cede excesso em:</strong> ${myTeam.surpluses.join(', ')}</div>`;
+          }
+          if (myTeam.deficits && myTeam.deficits.length > 0) {
+            detailsHtml += `<div style="margin-bottom: 3px; color: #dc2626;">⚠️ <strong>Cria carência em:</strong> ${myTeam.deficits.join(', ')}</div>`;
+          }
+          if (myTeam.positional_impacts && Object.keys(myTeam.positional_impacts).length > 0) {
+            const posChanges = Object.entries(myTeam.positional_impacts).map(([pos, diff]) => `${pos}: ${diff}`).join(' | ');
+            detailsHtml += `<div style="color: var(--gray-600); margin-top: 4px;">Balanço: ${posChanges}</div>`;
+          }
+          document.getElementById('tradeMyTeamImpactDetails').innerHTML = detailsHtml;
+        }
+
+        // Partner Team Data
+        const partnerTeam = data.partner_team;
+        const partnerCard = document.getElementById('tradePartnerTeamCard');
+        if (partnerTeam) {
+          partnerCard.style.display = 'block';
+          document.getElementById('tradePartnerTeamName').innerText = `${partnerTeam.team_name} (${partnerTeam.owner_name})`;
+
+          const psDiff = partnerTeam.starter_projected_diff;
+          const psDiffEl = document.getElementById('tradePartnerTeamStarterDiff');
+          psDiffEl.innerText = `${psDiff >= 0 ? '+' : ''}${psDiff.toFixed(1)} pts/sem`;
+          psDiffEl.style.color = psDiff > 0 ? '#059669' : (psDiff < 0 ? '#dc2626' : 'var(--gray-700)');
+
+          const ptDiff = partnerTeam.total_projected_diff;
+          const ptDiffEl = document.getElementById('tradePartnerTeamTotalDiff');
+          ptDiffEl.innerText = `${ptDiff >= 0 ? '+' : ''}${ptDiff.toFixed(1)} pts/sem`;
+          ptDiffEl.style.color = ptDiff > 0 ? '#059669' : (ptDiff < 0 ? '#dc2626' : 'var(--gray-700)');
+
+          const pvBadge = document.getElementById('tradePartnerTeamVerdict');
+          pvBadge.innerText = partnerTeam.verdict;
+          pvBadge.className = 'badge-status ' + (partnerTeam.verdict.includes('FAVORÁVEL') ? 'badge-healthy' : (partnerTeam.verdict.includes('DESFAVORÁVEL') ? 'badge-out' : 'badge-questionable'));
+
+          // For the partner: they RECEIVE what we give, and they GIVE what we receive
+          document.getElementById('tradePartnerReceiveList').innerHTML = data.give_players.map(renderPlayerItem).join('');
+          document.getElementById('tradePartnerGiveList').innerHTML = data.receive_players.map(renderPlayerItem).join('');
+
+          let pDetailsHtml = '';
+          if (partnerTeam.surpluses && partnerTeam.surpluses.length > 0) {
+            pDetailsHtml += `<div style="margin-bottom: 3px;">✅ <strong>Cede excesso em:</strong> ${partnerTeam.surpluses.join(', ')}</div>`;
+          }
+          if (partnerTeam.deficits && partnerTeam.deficits.length > 0) {
+            pDetailsHtml += `<div style="margin-bottom: 3px; color: #dc2626;">⚠️ <strong>Cria carência em:</strong> ${partnerTeam.deficits.join(', ')}</div>`;
+          }
+          if (partnerTeam.positional_impacts && Object.keys(partnerTeam.positional_impacts).length > 0) {
+            const posChanges = Object.entries(partnerTeam.positional_impacts).map(([pos, diff]) => `${pos}: ${diff}`).join(' | ');
+            pDetailsHtml += `<div style="color: var(--gray-600); margin-top: 4px;">Balanço: ${posChanges}</div>`;
+          }
+          document.getElementById('tradePartnerImpactDetails').innerHTML = pDetailsHtml;
+        } else {
+          // No partner identified
+          document.getElementById('tradePartnerTeamName').innerText = 'Time Não Identificado';
+          document.getElementById('tradePartnerTeamStarterDiff').innerText = 'N/A';
+          document.getElementById('tradePartnerTeamTotalDiff').innerText = 'N/A';
+          document.getElementById('tradePartnerTeamVerdict').innerText = 'Indefinido';
+          document.getElementById('tradePartnerReceiveList').innerHTML = '<span style="color: var(--gray-500);">Selecione o parceiro para calcular.</span>';
+          document.getElementById('tradePartnerGiveList').innerHTML = '<span style="color: var(--gray-500);">-</span>';
+          document.getElementById('tradePartnerImpactDetails').innerHTML = '';
+        }
+
+        // Negotiation Tips
+        const tipsBox = document.getElementById('tradeNegotiationTipsBox');
+        const tipsList = document.getElementById('tradeNegotiationTipsList');
+        if (data.negotiation_tips && data.negotiation_tips.length > 0) {
+          tipsBox.style.display = 'block';
+          tipsList.innerHTML = data.negotiation_tips.map(t => `<div style="margin-bottom: 4px;">• ${t}</div>`).join('');
+        } else {
+          tipsBox.style.display = 'none';
+        }
+
+        // Risks
+        const risksBox = document.getElementById('tradeRisksBox');
+        const risksList = document.getElementById('tradeRisksList');
+        if (data.risks && data.risks.length > 0) {
+          risksBox.style.display = 'block';
+          risksList.innerHTML = data.risks.map(r => `<div style="margin-bottom: 4px;">• ${r}</div>`).join('');
+        } else {
+          risksBox.style.display = 'none';
+        }
+
+        card.style.display = 'block';
+        card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      } catch (err) {
+        alert('Erro ao avaliar troca: ' + err.message);
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerText = 'Avaliar Proposta de Troca';
+        }
+      }
+    }
+
+    // Weekly GM Workflows
+    async function runWorkflow(day) {
+      const card = document.getElementById('workflowResultCard');
+      const output = document.getElementById('workflowOutput');
+      output.innerText = 'Carregando análise e gerando propostas estruturadas...';
+      card.style.display = 'block';
+
+      try {
+        const resp = await authFetch(`/api/league/${currentLeagueId}/team/${currentRosterId}/workflow?day=${day}`);
+        const data = await resp.json();
+
+        document.getElementById('workflowHeadline').innerText = data.headline;
+        document.getElementById('workflowDayBadge').innerText = data.day.toUpperCase();
+        output.innerText = data.summary_lines.join('\n');
+      } catch (err) {
+        output.innerText = 'Erro: ' + err.message;
+      }
+    }
+
+    // Action execution (simulation/browser driver)
+    async function executeAction(actionId) {
+      if (!confirm('Deseja aprovar e executar esta ação no Sleeper?')) return;
+
+      try {
+        const resp = await authFetch(`/api/actions/${actionId}/execute`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ league_id: currentLeagueId }),
+        });
+        const res = await resp.json();
+        alert(res.message || 'Ação executada com sucesso!');
+        selectTeam(currentRosterId);
+      } catch (err) {
+        alert('Erro ao executar ação: ' + err.message);
+      }
+    }
+
+    // Tab Switching
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+
+      const clickedBtn = (window.event && window.event.target && window.event.target.classList.contains('tab-btn'))
+        ? window.event.target
+        : document.querySelector(`.tab-btn[onclick*="'${tabId}'"]`);
+      if (clickedBtn) clickedBtn.classList.add('active');
+      const targetPane = document.getElementById(`tab-${tabId}`);
+      if (targetPane) targetPane.classList.add('active');
+    }
+
+    // Auth Modal Handlers
+    function openAuthModal(tab = 'login') {
+      document.getElementById('authModal').style.display = 'flex';
+      switchAuthTab(tab);
+    }
+
+    function closeAuthModal() {
+      document.getElementById('authModal').style.display = 'none';
+    }
+
+    function switchAuthTab(tab) {
+      document.getElementById('authPaneLogin').style.display = (tab === 'login') ? 'block' : 'none';
+      document.getElementById('authPaneFirstAccess').style.display = (tab === 'first-access') ? 'block' : 'none';
+      document.getElementById('authPaneReset').style.display = (tab === 'reset') ? 'block' : 'none';
+
+      document.getElementById('authTabBtnLogin').classList.toggle('active', tab === 'login');
+      document.getElementById('authTabBtnFirstAccess').classList.toggle('active', tab === 'first-access');
+      document.getElementById('authTabBtnReset').classList.toggle('active', tab === 'reset');
+    }
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      const alertBox = document.getElementById('loginAlert');
+      alertBox.style.display = 'none';
+
+      try {
+        const resp = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password }),
+        });
+        const data = await resp.json();
+        if (data.error) throw new Error(data.error);
+
+        authToken = data.session_token;
+        localStorage.setItem('session_token', authToken);
+        currentUser = data;
+        updateNavAuth();
+        closeAuthModal();
+        await loadLeagueAndSeasons();
+      } catch (err) {
+        if (err.message && err.message.toLowerCase().includes('primeiro acesso')) {
+          alertBox.innerHTML = `⚠️ ${err.message}<br><button type="button" class="btn btn-coral btn-sm" style="margin-top: 10px; width: 100%; font-size: 0.85rem;" onclick="switchAuthTab('first-access'); document.getElementById('firstAccessEmail').value = '${email}';">👉 Ir para Primeiro Acesso e Definir Minha Senha</button>`;
+        } else {
+          alertBox.innerText = err.message;
+        }
+        alertBox.style.display = 'block';
+      }
+
+    }
+
+    async function handleFirstAccess(e) {
+      e.preventDefault();
+      const email = document.getElementById('firstAccessEmail').value.trim();
+      const password = document.getElementById('firstAccessPassword').value;
+      const confirm = document.getElementById('firstAccessConfirm').value;
+      const alertBox = document.getElementById('firstAccessAlert');
+      alertBox.style.display = 'none';
+
+      if (password !== confirm) {
+        alertBox.innerText = 'As senhas digitadas não coincidem.';
+        alertBox.style.display = 'block';
+        return;
+      }
+
+      try {
+        const resp = await fetch('/api/auth/first-access', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password }),
+        });
+        const data = await resp.json();
+        if (data.error) throw new Error(data.error);
+
+        authToken = data.session_token;
+        localStorage.setItem('session_token', authToken);
+        currentUser = data.user;
+        updateNavAuth();
+        closeAuthModal();
+        alert(data.message || 'Senha cadastrada com sucesso!');
+        await loadLeagueAndSeasons();
+      } catch (err) {
+        alertBox.innerText = err.message;
+        alertBox.style.display = 'block';
+      }
+    }
+
+    async function handleResetPassword(e) {
+      e.preventDefault();
+      const token = document.getElementById('resetTokenInput').value.trim();
+      const new_password = document.getElementById('resetNewPassword').value;
+      const confirm = document.getElementById('resetConfirmPassword').value;
+      const alertBox = document.getElementById('resetAlert');
+      alertBox.style.display = 'none';
+
+      if (new_password !== confirm) {
+        alertBox.innerText = 'As senhas não coincidem.';
+        alertBox.style.display = 'block';
+        return;
+      }
+
+      try {
+        const resp = await fetch('/api/auth/reset-password', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token, new_password }),
+        });
+        const data = await resp.json();
+        if (data.error) throw new Error(data.error);
+
+        alert(data.message || 'Senha redefinida com sucesso! Por favor, faça login.');
+        switchAuthTab('login');
+      } catch (err) {
+        alertBox.innerText = err.message;
+        alertBox.style.display = 'block';
+      }
+    }
+
+    async function logoutUser() {
+      try {
+        await authFetch('/api/auth/logout', { method: 'POST' });
+      } catch (e) {
+        console.log('Logout error', e);
+      }
+      currentUser = null;
+      authToken = '';
+      localStorage.removeItem('session_token');
+      updateNavAuth();
+      openAuthModal('login');
+    }
+
+    // Admin Management Functions (sacramento.unb@gmail.com)
+    async function openAdminModal() {
+      document.getElementById('adminModal').style.display = 'flex';
+      document.getElementById('adminRegisterAlert').style.display = 'none';
+      document.getElementById('adminTokenDisplayBox').style.display = 'none';
+      await loadAdminUsersList();
+    }
+
+    function closeAdminModal() {
+      document.getElementById('adminModal').style.display = 'none';
+    }
+
+    async function loadAdminUsersList() {
+      const tbody = document.getElementById('adminUsersTableBody');
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align: center;"><div class="spinner"></div></td></tr>';
+      try {
+        const resp = await authFetch('/api/admin/users');
+        const data = await resp.json();
+        if (data.error) throw new Error(data.error);
+
+        tbody.innerHTML = data.users.map(u => {
+          let statusBadge = '<span class="badge-status badge-healthy">Ativo</span>';
+          if (u.status === 'pending_password') {
+            statusBadge = '<span class="badge-status badge-questionable">Pendente 1º Acesso</span>';
+          } else if (u.status === 'reset_required') {
+            statusBadge = '<span class="badge-status badge-out">Reset Solicitado</span>';
+          }
+          return `
+            <tr>
+              <td><strong>${u.email}</strong></td>
+              <td>${u.is_admin ? '<span class="card-badge card-badge-coral" style="font-size: 0.75rem;">ADMIN</span>' : '<span class="card-badge" style="font-size: 0.75rem;">Usuário</span>'}</td>
+              <td>${statusBadge}</td>
+              <td style="font-size: 0.8rem; color: var(--gray-600);">${u.created_at || '--'}</td>
+              <td style="text-align: right;">
+                <div style="display: inline-flex; gap: 6px;">
+                  <button class="btn btn-outline-navy btn-sm" onclick="adminGenerateResetToken('${u.email}')">Gerar Token</button>
+                  <button class="btn btn-coral btn-sm" onclick="adminDirectReset('${u.email}')">Definir Senha</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join('');
+      } catch (err) {
+        tbody.innerHTML = `<tr><td colspan="5" style="color: var(--coral);">${err.message}</td></tr>`;
+      }
+    }
+
+    async function handleAdminRegisterUser(e) {
+      e.preventDefault();
+      const email = document.getElementById('adminNewUserEmail').value.trim();
+      const alertBox = document.getElementById('adminRegisterAlert');
+      alertBox.style.display = 'none';
+
+      try {
+        const resp = await authFetch('/api/admin/users', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
+        const data = await resp.json();
+        if (data.error) throw new Error(data.error);
+
+        alertBox.innerText = data.message;
+        alertBox.style.background = 'rgba(16, 185, 129, 0.1)';
+        alertBox.style.color = '#065f46';
+        alertBox.style.borderLeftColor = '#10b981';
+        alertBox.style.display = 'block';
+        document.getElementById('adminNewUserEmail').value = '';
+        await loadAdminUsersList();
+      } catch (err) {
+        alertBox.innerText = err.message;
+        alertBox.style.background = 'rgba(240, 90, 36, 0.1)';
+        alertBox.style.color = 'var(--coral)';
+        alertBox.style.borderLeftColor = 'var(--coral)';
+        alertBox.style.display = 'block';
+      }
+    }
+
+    async function adminGenerateResetToken(email) {
+      try {
+        const resp = await authFetch('/api/admin/users/reset', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email }),
+        });
+        const data = await resp.json();
+        if (data.error) throw new Error(data.error);
+
+        const box = document.getElementById('adminTokenDisplayBox');
+        document.getElementById('adminTokenDisplayText').innerText = `${data.reset_token}`;
+        box.style.display = 'block';
+        await loadAdminUsersList();
+      } catch (err) {
+        alert('Erro ao gerar token: ' + err.message);
+      }
+    }
+
+    async function adminDirectReset(email) {
+      const newPw = prompt(`Digite a nova senha para ${email} (mínimo 6 caracteres):`);
+      if (!newPw) return;
+      if (newPw.length < 6) {
+        alert('A senha deve conter no mínimo 6 caracteres.');
+        return;
+      }
+
+      try {
+        const resp = await authFetch('/api/admin/users/reset', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, direct_password: newPw }),
+        });
+        const data = await resp.json();
+        if (data.error) throw new Error(data.error);
+
+        alert(data.message || 'Senha definida com sucesso!');
+        await loadAdminUsersList();
+      } catch (err) {
+        alert('Erro: ' + err.message);
+      }
+    }
+
+    // Auto-initialize on DOM load
+    window.addEventListener('DOMContentLoaded', async () => {
+      const isAuth = await checkAuthStatus();
+      if (isAuth) {
+        await loadLeagueAndSeasons();
+      }
+    });
+  </script>
+</body>
+</html>
