@@ -60,6 +60,19 @@ cd sleeper_agent
 pip install -e .
 ```
 
+## Audit status and security hold
+
+This is a private fantasy-management system with account, league and browser
+automation state. The example configuration contains personal/account
+identifiers and must be replaced with synthetic values before sharing. Keep
+`.env`, SQLite data, session cookies and cache directories out of Git.
+
+The human approval gate is a design requirement, not proof of safe deployment;
+the `exec` path can mutate a real league. Do not authenticate to Sleeper, call
+Gemini/Ollama, run Playwright or execute roster changes during documentation
+audits. On 2026-10-20 only source inspection and documentation were performed;
+no automated tests or remote operations were run.
+
 Copy the environment example and configure your Sleeper username:
 ```bash
 cp .env.example .env
