@@ -137,7 +137,7 @@ class SleeperAgentRequestHandler(BaseHTTPRequestHandler):
                 self._send_json({"authenticated": True, "user": user})
             return
 
-        # API: Admin - List Users (Strictly restricted to admin sacramento.unb@gmail.com)
+        # API: Admin - List Users (strictly restricted to the configured admin account)
         if path == "/api/admin/users":
             user = self._get_authenticated_user()
             if not user:
