@@ -17,7 +17,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 logger = logging.getLogger(__name__)
 
-ADMIN_EMAIL = "sacramento.unb@gmail.com"
+ADMIN_EMAIL = os.getenv("ADMIN_EMAIL", "admin@example.com")
 
 
 def hash_password(password: str) -> Tuple[str, str]:

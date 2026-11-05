@@ -7,12 +7,13 @@ services:
     ports:
       - "${PORT:-8088}:8000"
     environment:
-      - SLEEPER_USERNAME=${SLEEPER_USERNAME:-sacramento.unb@gmail.com}
-      - SLEEPER_LEAGUE_ID=${SLEEPER_LEAGUE_ID:-1389330200994533376}
+      - SLEEPER_USERNAME=${SLEEPER_USERNAME:-your-sleeper-username}
+      - SLEEPER_LEAGUE_ID=${SLEEPER_LEAGUE_ID:-demo-league-id}
       - SLEEPER_SEASON=${SLEEPER_SEASON:-2026}
       - GEMINI_API_KEY=${GEMINI_API_KEY:-${GOOGLE_API_KEY:-}}
       - GOOGLE_API_KEY=${GOOGLE_API_KEY:-}
       - GEMINI_MODEL=${GEMINI_MODEL:-gemini-3.5-flash-lite}
+      - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@example.com}
       - BROWSER_DRY_RUN=${BROWSER_DRY_RUN:-true}
       - SQLITE_DB_PATH=/app/data/sleeper_agent.db
       - SLEEPER_CACHE_DIR=/app/data

@@ -9,7 +9,7 @@ from io import BytesIO
 
 from sleeper.models import League, Matchup, Player, Roster, User
 from sleeper_agent.web import SleeperAgentRequestHandler
-from storage.db import Database
+from storage.db import Database, ADMIN_EMAIL
 
 
 class DummyServer:
@@ -85,7 +85,7 @@ class TestWebAPI(unittest.TestCase):
         if authenticated:
             handler._get_authenticated_user = lambda: {
                 "token": "test-mock-token",
-                "email": "sacramento.unb@gmail.com",
+                "email": ADMIN_EMAIL,
                 "is_admin": True,
             }
         else:
@@ -177,7 +177,7 @@ class TestWebAPI(unittest.TestCase):
         handler = self._create_handler(
             "/api/auth/first-access",
             method="POST",
-            body={"email": "sacramento.unb@gmail.com", "password": "newpassword123"},
+            body={"email": ADMIN_EMAIL, "password": "newpassword123"},
             authenticated=False,
         )
         handler.do_POST()
@@ -190,20 +190,20 @@ class TestWebAPI(unittest.TestCase):
         handler2 = self._create_handler(
             "/api/auth/login",
             method="POST",
-            body={"email": "sacramento.unb@gmail.com", "password": "newpassword123"},
+            body={"email": ADMIN_EMAIL, "password": "newpassword123"},
             authenticated=False,
         )
         handler2.do_POST()
         self.assertEqual(handler2.status_code, 200)
         data2 = json.loads(handler2.wfile.getvalue().decode("utf-8"))
-        self.assertEqual(data2["email"], "sacramento.unb@gmail.com")
+        self.assertEqual(data2["email"], ADMIN_EMAIL)
         self.assertTrue(data2["is_admin"])
 
         # 3. Login with wrong password
         handler3 = self._create_handler(
             "/api/auth/login",
             method="POST",
-            body={"email": "sacramento.unb@gmail.com", "password": "wrongpassword"},
+            body={"email": ADMIN_EMAIL, "password": "wrongpassword"},
             authenticated=False,
         )
         handler3.do_POST()
@@ -214,7 +214,7 @@ class TestWebAPI(unittest.TestCase):
         admin_handler = self._create_handler("/api/admin/users", authenticated=True)
         admin_handler._get_authenticated_user = lambda: {
             "token": "tok1",
-            "email": "sacramento.unb@gmail.com",
+            "email": ADMIN_EMAIL,
             "is_admin": True,
         }
         admin_handler.do_GET()

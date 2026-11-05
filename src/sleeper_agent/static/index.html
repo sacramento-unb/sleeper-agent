@@ -1182,7 +1182,7 @@
         <form onsubmit="handleLogin(event)">
           <div class="form-group">
             <label class="form-label">Email Autorizado:</label>
-            <input type="email" id="loginEmail" class="form-input" required placeholder="sacramento.unb@gmail.com">
+            <input type="email" id="loginEmail" class="form-input" required placeholder="admin@example.com">
           </div>
           <div class="form-group">
             <label class="form-label">Senha:</label>
@@ -1199,12 +1199,12 @@
       <!-- Tab: First Access -->
       <div id="authPaneFirstAccess" style="display: none;">
         <p style="font-size: 0.85rem; color: var(--gray-600); margin-bottom: 1.25rem; background: rgba(240,90,36,0.06); padding: 10px 12px; border-radius: 6px; border-left: 3px solid var(--coral);">
-          ⚠️ <strong>Atenção:</strong> Apenas emails <strong>previamente cadastrados pelo administrador</strong> (<code>sacramento.unb@gmail.com</code>) podem criar senha e ativar o acesso. Se você ainda não foi pré-cadastrado, solicite autorização ao administrador.
+          ⚠️ <strong>Atenção:</strong> Apenas emails <strong>previamente cadastrados pelo administrador</strong> podem criar senha e ativar o acesso. Se você ainda não foi pré-cadastrado, solicite autorização ao administrador.
         </p>
         <form onsubmit="handleFirstAccess(event)">
           <div class="form-group">
             <label class="form-label">Email Pré-Cadastrado:</label>
-            <input type="email" id="firstAccessEmail" class="form-input" required placeholder="sacramento.unb@gmail.com">
+            <input type="email" id="firstAccessEmail" class="form-input" required placeholder="admin@example.com">
           </div>
           <div class="form-group">
             <label class="form-label">Criar Senha (mínimo 6 caracteres):</label>
@@ -1222,7 +1222,7 @@
       <!-- Tab: Reset Password -->
       <div id="authPaneReset" style="display: none;">
         <p style="font-size: 0.85rem; color: var(--gray-600); margin-bottom: 1.25rem;">
-          Insira o token de redefinição fornecido pelo administrador (<strong>sacramento.unb@gmail.com</strong>) para cadastrar sua nova senha.
+          Insira o token de redefinição fornecido pelo administrador para cadastrar sua nova senha.
         </p>
         <form onsubmit="handleResetPassword(event)">
           <div class="form-group">
@@ -1244,7 +1244,7 @@
     </div>
   </div>
 
-  <!-- Admin Management Modal (Strictly restricted to sacramento.unb@gmail.com) -->
+  <!-- Admin Management Modal (restricted to the configured administrator) -->
   <div id="adminModal" class="modal-overlay" style="display: none;">
     <div class="modal-card modal-card-lg">
       <button class="modal-close-btn" onclick="closeAdminModal()">✕</button>
@@ -1252,7 +1252,7 @@
         <div>
           <span class="section-tag">Painel de Controle</span>
           <h2 style="color: var(--navy); font-size: 1.4rem;">Gestão de Usuários (Administrador)</h2>
-          <p style="font-size: 0.85rem; color: var(--gray-600);">Área restrita a <strong>sacramento.unb@gmail.com</strong>.</p>
+          <p style="font-size: 0.85rem; color: var(--gray-600);">Área restrita ao administrador configurado.</p>
         </div>
       </div>
 
@@ -1933,7 +1933,7 @@
           <button class="btn btn-coral btn-sm" onclick="openAuthModal('login')">Entrar</button>
         `;
       } else {
-        const isAdmin = currentUser.is_admin || (currentUser.email.toLowerCase() === 'sacramento.unb@gmail.com');
+            const isAdmin = currentUser.is_admin;
         navAuth.innerHTML = `
           <span style="font-size: 0.85rem; color: var(--gray-300); display: flex; align-items: center; gap: 6px;">
             <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #10b981;"></span>
@@ -2855,7 +2855,7 @@
       openAuthModal('login');
     }
 
-    // Admin Management Functions (sacramento.unb@gmail.com)
+    // Admin Management Functions
     async function openAdminModal() {
       document.getElementById('adminModal').style.display = 'flex';
       document.getElementById('adminRegisterAlert').style.display = 'none';

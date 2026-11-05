@@ -461,7 +461,7 @@ class SleeperAgentRequestHandler(BaseHTTPRequestHandler):
 
     def _handle_league_seasons(self) -> None:
         """Trace available seasons for the Docker-configured league."""
-        configured_id = os.getenv("SLEEPER_LEAGUE_ID", "1389330200994533376")
+        configured_id = os.getenv("SLEEPER_LEAGUE_ID", "demo-league-id")
         configured_season = os.getenv("SLEEPER_SEASON", "2026")
         cache_key = f"league_seasons:{configured_id}"
 

@@ -33,7 +33,7 @@ Built according to the core architectural design:
   - **Diagnóstico Executivo da Rodada**: Relatório executivo completo em português com diagnóstico tático, titulares absolutos (*Lock & Load*), trocas críticas de titulares (*Start/Sit*), prioridades de *Waiver Wire* e chaves para a vitória contra o adversário real da semana.
 
 - **Autenticação, RBAC e Persistência SQLite**:
-  - **Acesso Restrito**: Somente emails pré-cadastrados pelo administrador (`sacramento.unb@gmail.com`) têm permissão de acesso.
+  - **Acesso Restrito**: Somente emails pré-cadastrados pelo administrador têm permissão de acesso.
   - **Primeiro Acesso**: Ativação com criação de senha segura armazenada via **PBKDF2-HMAC-SHA256 com 100.000 iterações e salt criptográfico individual de 16 bytes**.
   - **Gestão de Senha do Administrador**: Suporte a variável `ADMIN_PASSWORD` no `.env` e comandos CLI dedicados para alteração e reset de senha.
   - **Persistência Fora do Docker**: Volume SQLite bind-mounted em `./data/sleeper_agent.db` no host, preservando usuários, sessões e cache entre recriações de containers.
@@ -66,8 +66,8 @@ cp .env.example .env
 ```
 Edit `.env`:
 ```ini
-SLEEPER_USERNAME=sacramento.unb@gmail.com
-SLEEPER_LEAGUE_ID=1389330200994533376
+SLEEPER_USERNAME=your-sleeper-username
+SLEEPER_LEAGUE_ID=demo-league-id
 SLEEPER_SEASON=2026
 
 # Google Gemini Flash-Lite & Flash (Nuvem)
@@ -78,7 +78,9 @@ GEMINI_MODEL=gemini-3.5-flash-lite
 OLLAMA_HOST=http://host.docker.internal:11434
 OLLAMA_MODEL=
 
-# Senha opcional para o Administrador (sacramento.unb@gmail.com)
+# Email opcional do administrador (admin@example.com por padrão)
+ADMIN_EMAIL=admin@example.com
+# Senha opcional para o administrador
 ADMIN_PASSWORD=sua_senha_segura
 
 # Persistência e Rede
@@ -145,7 +147,7 @@ python -m sleeper_agent exec <action_id>
 ```
 
 ### 8. Gestão de Senha do Administrador via CLI
-Você pode alterar ou resetar a senha da conta de administrador (`sacramento.unb@gmail.com`) diretamente via terminal:
+Você pode alterar ou resetar a senha da conta de administrador configurada diretamente via terminal:
 ```bash
 # Definir/alterar a senha do administrador diretamente:
 python -m sleeper_agent admin-password <nova_senha_min_6_chars>
@@ -184,7 +186,7 @@ A aplicação implementa um modelo de **Controle de Acesso Baseado em Papéis (R
 
 ### 1. Política de Acesso Restrito
 - **Nenhum usuário desconhecido pode se registrar livremente**: Apenas emails previamente cadastrados pelo administrador têm autorização de acesso ao sistema.
-- **Administrador Master**: `sacramento.unb@gmail.com`.
+- **Administrador Master**: definido por `ADMIN_EMAIL` (padrão: `admin@example.com`).
 
 ### 2. Fluxo de Primeiro Acesso
 - Ao ser pré-cadastrado pelo administrador, o usuário entra no status `pending_password`.
@@ -194,7 +196,7 @@ A aplicação implementa um modelo de **Controle de Acesso Baseado em Papéis (R
 
 ### 3. Redefinição de Senha
 - **Usuários Comuns**: O administrador pode acessar o modal **"⚙️ Gestão de Usuários"**, selecionar qualquer usuário e clicar em **"Gerar Token de Redefinição"** (ou definir uma nova senha direta). O usuário insere o token na aba "Redefinir Senha" para cadastrar sua nova senha.
-- **Administrador (`sacramento.unb@gmail.com`)**:
+- **Administrador configurado**:
   - **Opção A (via .env)**: Adicione `ADMIN_PASSWORD=sua_senha` no arquivo `.env`. Na inicialização do container, a senha é automaticamente aplicada e ativada.
   - **Opção B (via Terminal Docker)**:
     ```bash
@@ -234,8 +236,7 @@ O sistema conta com um Diretor de Fantasy Football (GM) autônomo powered by **G
 | Ambiente | Host / URL | Porta | Finalidade |
 | :--- | :--- | :--- | :--- |
 | **Local** | `http://localhost:8088` | `8088` | Desenvolvimento e testes locais |
-| **Servidor Remoto** | `http://192.168.1.52:8089` | `8089` | Servidor de rede local (Home Server) |
-| **Túnel Público (LocalTunnel)** | `https://fantasy-4k.loca.lt` | `8089` | Acesso público seguro via internet |
+| **Servidor remoto** | Defina seu próprio host | `8089` | Opcional; não há endpoint público configurado |
 
 ---
 
@@ -263,15 +264,15 @@ docker compose up -d --build
 ```
 Acesse a aplicação em `http://localhost:8088`.
 
-### Executar no Servidor Remoto (192.168.1.52)
+### Executar em um servidor remoto
 ```bash
-# Sincronizar arquivos para o servidor:
-rsync -avz --exclude='.env' --exclude='data/' --exclude='.cache/' -e "ssh -i ~/.ssh/id_ed25519_manvi" ./ root@192.168.1.52:/root/sleeper_agent/
+# Adapte o host, usuário e caminho ao seu ambiente. Nunca versione credenciais.
+rsync -avz --exclude='.env' --exclude='data/' --exclude='.cache/' ./ user@your-server.example:/opt/sleeper-agent/
 
 # Reconstruir e subir o container no servidor:
-ssh -i ~/.ssh/id_ed25519_manvi root@192.168.1.52 "cd /root/sleeper_agent && docker compose up -d --build"
+ssh user@your-server.example "cd /opt/sleeper-agent && docker compose up -d --build"
 ```
-Acesse a aplicação em `http://192.168.1.52:8089` ou via LocalTunnel em `https://fantasy-4k.loca.lt`.
+A publicação externa exige um proxy e autenticação configurados pelo operador.
 
 ---
 
